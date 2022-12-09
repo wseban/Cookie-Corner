@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const {createOrder, changeOrder, deleteOrder} = require('../../controllers/thoughtsController');
+const {createOrder, changeOrder, deleteOrder} = require('../../controllers/orderControllers');
 
-router.route('/order').post(createOrder);
+router.route('/').post(createOrder);
 
-router.route('/order/:orderId').put(changeOrder).delete(deleteOrder);
+router.route('/:orderId').put(changeOrder).delete(deleteOrder);
 
 
 
