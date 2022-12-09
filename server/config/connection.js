@@ -10,3 +10,4 @@ mongoose.connect(connectionString, {
   useUnifiedTopology: true,
 });
 
+module.exports = mongoose.connection;
