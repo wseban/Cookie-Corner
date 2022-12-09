@@ -29,7 +29,7 @@ module.exports = {
 
     },
 
-    deleteOrder(req, req){
+    deleteOrder(req, res){
         Order.findOneAndRemove(
             { _id: req.params.orderId }
         )
