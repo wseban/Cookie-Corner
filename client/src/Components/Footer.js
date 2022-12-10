@@ -3,16 +3,16 @@ import { HiBuildingStorefront, HiPhone, HiClock } from "react-icons/hi2";
 
 function Footer() {
     return (
-        <footer>
-            <div className="d-flex justify-content-evenly mpt-3">
+        <footer className="fixed-bottom">
+            <div className="d-flex justify-content-evenly pb-3">
                 <p>
-                    <HiBuildingStorefront color="black" size={50} /> <b> 81 Market St </b>
+                    <HiBuildingStorefront color="black" size={50} /> <b> 81 Market St, San Francisco </b>
                 </p>
                 <p>
-                    <HiPhone color="black" size={50} />  <b> 640 348 7070</b>
+                    <HiPhone color="black" size={50} />  <b> (123) 456 7890 </b>
                 </p>
                 <p>
-                    <HiClock color="black" size={50} />  <b> Tue-Sun: 12pm-10pm</b>
+                    <HiClock color="black" size={50} />  <b> Open Tue-Sun: 12pm-10pm</b>
                 </p>
             </div>
         </footer>
