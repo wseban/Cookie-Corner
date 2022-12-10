@@ -29,6 +29,6 @@ orderSchema.virtual("foodCount").get(function () {
     return this.food.length;
 })
 
-const Order = model('orders', orderSchema);
+const Order = model('order', orderSchema);
 
 module.exports = Order;

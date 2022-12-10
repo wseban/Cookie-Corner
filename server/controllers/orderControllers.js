@@ -47,5 +47,38 @@ module.exports = {
             : res.json(orderData)
     )
             .catch((err) => res.status(500).json(err));
-    }
+    },
+
+    addCookie(req, res){
+            Order.findOneAndUpdate(
+                { _id: req.params.orderId },
+                { $addToSet: { food: req.body } },
+                { runValidators: true, new: true })
+
+                .then((orderData) =>
+                !orderData
+                    ? res
+                        .status(404)
+                        .json({ message: 'No order found' })
+                    : res.json(orderData)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+    getOneOrder(req, res) {
+        Order.findOne({ _id: req.params.orderId })
+            .select('-__v')
+            .populate("food")
+            .then((orderData) =>
+                !orderData
+                    ? res.status(404).json({ message: 'No order found' })
+                    : res.json({
+                        orderData,
+                        message: "Order Found",
+                    })
+            )
+            .catch((err) => {
+                console.log(err);
+                return res.status(500).json(err);
+            });
+    },
 };
