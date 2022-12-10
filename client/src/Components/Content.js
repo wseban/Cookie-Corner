@@ -27,7 +27,7 @@ export default function Content() {
     return (
         <main>
             <Header currentPage={currentPage} changePage={changePage} />
-            <main>{renderPage()}</main>
+            <div className="body">{renderPage()}</div>
             <Footer />
         </main>
     );
