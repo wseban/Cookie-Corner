@@ -5,7 +5,7 @@ function Header({ currentPage, changePage }) {
 
 
     return (
-      <header className='hstack gap-3 fixed-top' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
+      <header className='hstack gap-3' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
       <h1  style={{color:"#eaded2", paddingLeft: "10px"}}>Cookie Monster's Cookie Corner</h1>
       <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
         <li className="nav-item" style={{fontSize: "36px"}}>
