@@ -3,40 +3,62 @@ module.exports = {
   /* create user on sign up - hash password */
   createUser: async (req, res) => {
     console.log("in createUser");
-    const user = await User.create(req.body);
-    if (!user) {
-      res.status(500).json({message: 'error registering user'});
+    try {
+      const user = await User.create(req.body);
+      user? res.json(user):
+        res.status(500).json({message: 'error registering user'});
+      return;
+    } catch(err) {
+      res.json(err);
     }
-    res.json(user);
+  },
+
+  getUsers: async (req, res) => {
+    console.log("in getUsers");
+    try {
+      const users = await User.find({});
+      users? res.json(users):
+        res.status(500).json({message: 'Error getting users'});
+      return;
+    } catch(err) {
+      res.json(err);
+    }
   },
 
   /* get a single user by id, with orders */
-  getUser: async (req, res) => {
-    console.log("in getUser");
-    const user = await User.findOne({_id: req.params.userId}).populate('order');
-    if(!user) {
-      res.json(500).json({message: 'Error finding user'});
+  getOneUser: async (req, res) => {
+    console.log("in getOneUser");
+    try {
+      const user = await User.findOne({_id: req.params.userId}).populate('orders');
+      user? res.json(user):
+        res.status(500).json({message: 'Error finding user'});
+      return;
+    } catch(err) {
+      res.json(err);
     }
-    res.json(user);
   },
 
   /* login user - check password */
   loginUser: async (req, res) => {
     console.log("in loginUser");
-    const user = await User.findOne({ email: req.body.email});
-    if(!user) {
-      res.status(500).json({message: 'Error finding user'});
+    try {
+      const user = await User.findOne({ email: req.body.email});
+      if(!user) {
+        res.status(500).json({message: 'Error finding user'});
+        return;
+      }
+      /* check password */
+      const result = await user.checkPassword(req.body.password);
+      result? res.json(user):
+        res.status(500).json({message: 'Invalid password'});
+      return;
+    } catch(err) {
+      res.json(err);
     }
-    /* check password */
-    const result = await user.checkPassword();
-    if(!result) {
-      res.status(500).json({message: 'Invalid password'});
-    }
-    /* set loggedIn status? */
   },
   /* log the user out */
   logoutUser: async (req, res) => {
-    /* set loggedIn status? */
     console.log("in logoutUser");
+    res.json({message: 'logged out'});
   },
 };
