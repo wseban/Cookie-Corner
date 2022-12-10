@@ -1,15 +1,21 @@
 const { User, Food, Order } = require("../models");
 
 module.exports = {
+    getOrder(req, res){
+        Order.find()
+        .select('-__v')
+        .then((orderData) => {
+            res.json(orderData);
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.status(500).json(err);
+        });
+    },
     createOrder(req, res){
         Order.create(req.body)
-        .then(orderData => {
-            return User.findOneAndUpdate(
-                {_id: req.body.userId},
-                {$push: {order: orderData._id}},
-                {new: true}
-            );
-        })
+        .then(orderData => res.json(orderData))
+        .catch((err) => res.status(500).json(err));
     },
 
     changeOrder(req, res){
