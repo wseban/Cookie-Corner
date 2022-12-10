@@ -1,15 +1,16 @@
 import React from "react";
-
+import '../styles/navStyle.css';
 
 function Header({ currentPage, changePage }) {
 
 
     return (
-      <header className='hstack gap-3 fixed-top' style={{backgroundColor: "#504A6D" }}>
-      <h1 className='' style={{}}>Cookie Monster's Cookie Corner</h1>
+      <header className='hstack gap-3 fixed-top' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
+      <h1  style={{color:"#eaded2", paddingLeft: "10px"}}>Cookie Monster's Cookie Corner</h1>
       <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
         <li className="nav-item" style={{fontSize: "36px"}}>
           <a
+            // style={{color:"#eaded2"}}
             href="#home"
             onClick={() => changePage('Home')}
             className={currentPage === 'Home' ? 'nav-link active' : 'nav-link'}

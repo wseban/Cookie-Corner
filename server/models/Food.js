@@ -18,6 +18,6 @@ const foodSchema = new Schema({
     }
 });
 
-const Food = model('Food', foodSchema);
+const Food = model('food', foodSchema);
 
 module.exports = Food;
