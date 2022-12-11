@@ -2,13 +2,17 @@ const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema(
     {
-        username: {
+        orderName: {
             type: String,
             required: true,
             unique: true,
             trimmed: true,
         },
         createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        deliveryDate: {
             type: Date,
             default: Date.now,
         },
