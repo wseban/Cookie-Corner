@@ -12,16 +12,19 @@ module.exports = {
             return res.status(500).json(err);
         });
     },
-    createOrder(req, res){
-        Order.create(req.body)
-        .then(orderData => {
-            return User.findOneAndUpdate(
-            {_id: req.body.userId},
-            {$push: {orders: orderData._id}},
-            {new: true}
-        )}
-        )
-        .catch((err) => res.status(500).json(err));
+    async createOrder(req, res){
+        try {
+            const newOrder = await Order.create(req.body);
+            const updatedUser = await User.findOneAndUpdate(
+              { _id: req.body.userId },
+              { $addToSet: { orders: newOrder._id } },
+              { new: true, runValidators: true }
+            );
+            return res.json(updatedUser);
+          } catch (err) {
+            console.log(err);
+            return res.status(400).json(err);
+          }
     },
 
     changeOrder(req, res){
