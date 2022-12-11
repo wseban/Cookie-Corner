@@ -6,6 +6,7 @@ module.exports = {
   createUser: async (req, res) => {
     console.log("in createUser");
     try {
+      console.log(req.body);
       const user = await User.create(req.body);
       if (user) { 
         /* generate JWT with the data from the user, and return to client */
@@ -37,7 +38,9 @@ module.exports = {
   getOneUser: async (req, res) => {
     console.log("in getOneUser");
     try {
+      console.log("userId:" + req.params.userId);
       const user = await User.findOne({_id: req.params.userId}).populate('orders');
+      console.log("found user:" + user);
       user? res.json(user):
         res.status(500).json({message: 'Error finding user'});
       return;

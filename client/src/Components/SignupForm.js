@@ -3,12 +3,9 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap
 import { signupUser } from '../utils/api';
 import AuthService  from '../utils/auth';
 
-export default function SignupForm({enable}) {
+export default function SignupForm() {
   const [signupFormData, setSignupFormData] = useState({fullName: '', email: '', password: ''});
 
-  const formState = () => {
-    return enable === 'active'? true: false;
-  }
   /* update the name, email or password as user inputs */
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -49,8 +46,7 @@ export default function SignupForm({enable}) {
                       name='fullName' 
                       placeholder='Enter your name' 
                       value={signupFormData.fullName}
-                      onChange={handleOnChange}
-                      disabled={formState()}>
+                      onChange={handleOnChange}>
           </FormControl>
         </FormGroup>
         <FormGroup className='' id='email'>
@@ -59,8 +55,7 @@ export default function SignupForm({enable}) {
                       name='email' 
                       placeholder='Enter your email'
                       value={signupFormData.email}
-                      onChange={handleOnChange}
-                      disabled={formState()}>
+                      onChange={handleOnChange}>
           </FormControl>
         </FormGroup>
         <FormGroup className='' id='password'>
@@ -69,11 +64,10 @@ export default function SignupForm({enable}) {
                       name='password' 
                       placeholder='Enter a password'
                       value={signupFormData.password}
-                      onChange={handleOnChange}
-                      disabled={formState()}>
+                      onChange={handleOnChange}>
           </FormControl>
         </FormGroup>
-        <Button className='btn-secondary mt-2' type='submit' disabled={formState()}>
+        <Button className='btn-secondary mt-2' type='submit'>
           Sign Up
         </Button>
       </Form>

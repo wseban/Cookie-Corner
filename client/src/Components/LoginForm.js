@@ -3,12 +3,8 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap
 import { loginUser } from '../utils/api';
 import AuthService from '../utils/auth';
 
-export default function LoginForm({enable}) {
+export default function LoginForm() {
   const [loginFormData, setLoginFormData] = useState({ email: '', password: '' });
-
-  const formState = () => {
-    return enable === 'active'? true: false;
-  }
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -47,8 +43,7 @@ export default function LoginForm({enable}) {
                     name='email'
                     placeholder='Enter your email'
                     value={loginFormData.email}
-                    onChange={handleOnChange}
-                    disabled={formState()}>
+                    onChange={handleOnChange}>
 
           </FormControl>
         </FormGroup>
@@ -58,12 +53,11 @@ export default function LoginForm({enable}) {
                     name='password'
                     placeholder='Enter a password'
                     value={loginFormData.password}
-                    onChange={handleOnChange}
-                    disabled={formState()}>
+                    onChange={handleOnChange}>
 
           </FormControl>
         </FormGroup>
-        <Button className='btn-secondary mt-2' type='submit' disabled={formState()}>
+        <Button className='btn-secondary mt-2' type='submit'>
           Login
         </Button>
       </Form>
