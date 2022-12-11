@@ -40,7 +40,7 @@ export default function Contact() {
   };
   return (
     <div style={{ maxWidth: "1000px", margin: "0 auto", height: '75vh' }}>
-      <h2>Contact Me</h2>
+      <h2>Catering Request</h2>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Name</Form.Label>
@@ -60,7 +60,7 @@ export default function Contact() {
             type="email" placeholder="Enter email" />
         </Form.Group>
         <Form.Group controlId="formBasicMessage">
-          <Form.Label>Message Me</Form.Label>
+          <Form.Label>Message Us</Form.Label>
           <Form.Control
             value={formState.message}
             name="message"
