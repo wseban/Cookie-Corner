@@ -4,6 +4,7 @@ import AuthService from '../../utils/auth';
 
 export default function Order() {
     const [orderData, setOrderData] = useState([]);
+    const [userName, setuserName] = useState();
     const token = AuthService.getToken();
 
     useEffect(() => {
@@ -14,13 +15,18 @@ export default function Order() {
                     throw new Error('No orders from user');
                 }
                 const userData = await res.json();
+                setuserName(userData.fullName)
+
                 const allUserOrders = userData.orders;
-                const currentOrder = allUserOrders[allUserOrders.length-1];
-                console.log(currentOrder)
-                const foodInfoRes = await Promise.all(currentOrder.food.map(async foodId => (await getSingleFood(foodId))));
-                const orderFoodData = await Promise.all(foodInfoRes.map(async res => (await res.json())));
-                console.log(orderFoodData)
-                setOrderData(orderFoodData);
+
+                if (allUserOrders.length > 0) {
+                    const currentOrder = allUserOrders[allUserOrders.length - 1];
+                    console.log(currentOrder)
+                    const foodInfoRes = await Promise.all(currentOrder.food.map(async foodId => (await getSingleFood(foodId))));
+                    const orderFoodData = await Promise.all(foodInfoRes.map(async res => (await res.json())));
+                    console.log(orderFoodData)
+                    setOrderData(orderFoodData);
+                }
             } catch (err) {
                 console.error(err);
             }
@@ -31,8 +37,8 @@ export default function Order() {
     return (
 
         <div>
-            <h2>Welcome, </h2>
-            {orderData
+            <h2>Welcome, {userName}</h2>
+            {orderData.length > 0
                 ?
                 orderData.map((food) => (
                     <div key={food._id} className="col-12">
