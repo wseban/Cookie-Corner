@@ -3,9 +3,12 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap
 import { signupUser } from '../utils/api';
 import AuthService  from '../utils/auth';
 
-export default function SignupForm() {
+export default function SignupForm({enable}) {
   const [signupFormData, setSignupFormData] = useState({fullName: '', email: '', password: ''});
 
+  const formState = () => {
+    return enable === 'active'? true: false;
+  }
   /* update the name, email or password as user inputs */
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -38,15 +41,16 @@ export default function SignupForm() {
 
   }
   return (
-    <div>
-      <Form className='' onSubmit={handleSignupForm}>
+    <div className='border border-secondary rounded bg-light'>
+      <Form className='p-5' onSubmit={handleSignupForm} >
         <FormGroup className='' id='name'>
           <FormLabel>Name</FormLabel>
           <FormControl type='string' 
                       name='fullName' 
                       placeholder='Enter your name' 
                       value={signupFormData.fullName}
-                      onChange={handleOnChange}>
+                      onChange={handleOnChange}
+                      disabled={formState()}>
           </FormControl>
         </FormGroup>
         <FormGroup className='' id='email'>
@@ -55,7 +59,8 @@ export default function SignupForm() {
                       name='email' 
                       placeholder='Enter your email'
                       value={signupFormData.email}
-                      onChange={handleOnChange}>
+                      onChange={handleOnChange}
+                      disabled={formState()}>
           </FormControl>
         </FormGroup>
         <FormGroup className='' id='password'>
@@ -64,10 +69,11 @@ export default function SignupForm() {
                       name='password' 
                       placeholder='Enter a password'
                       value={signupFormData.password}
-                      onChange={handleOnChange}>
+                      onChange={handleOnChange}
+                      disabled={formState()}>
           </FormControl>
         </FormGroup>
-        <Button className='btn-primary p-2' type='submit'>
+        <Button className='btn-secondary mt-2' type='submit' disabled={formState()}>
           Sign Up
         </Button>
       </Form>
