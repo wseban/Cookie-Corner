@@ -27,3 +27,12 @@ export const loginUser = (userData) => {
         body: JSON.stringify(userData)
     });    
 }
+
+export const getMyInfo = (token) => {
+    return fetch( '/api/users/me', {
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        }
+    });
+}
