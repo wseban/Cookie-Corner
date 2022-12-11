@@ -35,8 +35,8 @@ export default function LoginForm() {
     setLoginFormData({ email: '', password: '' });
   }
   return (
-    <div>
-      <Form className='' onSubmit={handleSignupForm}>
+    <div className='border border-secondary rounded bg-light'>
+      <Form className='p-5' onSubmit={handleSignupForm}>
         <FormGroup className='' id='email'>
           <FormLabel>Email</FormLabel>
           <FormControl type='string'
@@ -57,7 +57,7 @@ export default function LoginForm() {
 
           </FormControl>
         </FormGroup>
-        <Button className='btn-primary p-2' type='submit'>
+        <Button className='btn-secondary mt-2' type='submit'>
           Login
         </Button>
       </Form>

@@ -6,7 +6,6 @@ const userSchema = new Schema({
   fullName: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
   email: {
@@ -23,7 +22,7 @@ const userSchema = new Schema({
   orders: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Order',
+      ref: 'order',
     }
   ],
 });
