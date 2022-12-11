@@ -10,7 +10,7 @@ module.exports = {
       const user = await User.create(req.body);
       if (user) { 
         /* generate JWT with the data from the user, and return to client */
-        const token = signToken({user});
+        const token = signToken(user);
         res.json({token, user}); 
       }
       else {
@@ -49,6 +49,21 @@ module.exports = {
     }
   },
 
+    /* get the currently logged in user (me), with orders */
+    getMe: async (req, res) => {
+      console.log("in getMe");
+      try {
+        console.log("user._id:" + req.user._id);
+        const user = await User.findOne({_id: req.user._id}).populate('orders');
+        console.log("found user:" + user);
+        user? res.json(user):
+          res.status(500).json({message: 'Error finding user'});
+        return;
+      } catch(err) {
+        res.json(err);
+      }
+    },
+
   /* login user - check password */
   loginUser: async (req, res) => {
     console.log("in loginUser");
@@ -62,7 +77,7 @@ module.exports = {
       const result = await user.checkPassword(req.body.password);
       if (result) { 
         /* generate JWT with the data from the user, and return to client */
-        const token = signToken({ user });
+        const token = signToken(user);
         res.json({ token, user});
       } else {
         res.status(500).json({message: 'Invalid password'});
