@@ -29,9 +29,9 @@ function Header({ currentPage, changePage }) {
         </li>
         <li className="nav-item" style={{fontSize: "36px"}}>
           <a
-            href="#order"
-            onClick={() => changePage('Order')}
-            className={currentPage === 'Order' ? 'nav-link active' : 'nav-link'}
+            href="#signin"
+            onClick={() => changePage('Signin')}
+            className={currentPage === 'Signin' ? 'nav-link active' : 'nav-link'}
           >
             Order
           </a>
