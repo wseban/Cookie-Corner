@@ -14,7 +14,13 @@ module.exports = {
     },
     createOrder(req, res){
         Order.create(req.body)
-        .then(orderData => res.json(orderData))
+        .then(orderData => {
+            return User.findOneAndUpdate(
+            {_id: req.body.userId},
+            {$push: {orders: orderData._id}},
+            {new: true}
+        )}
+        )
         .catch((err) => res.status(500).json(err));
     },
 
