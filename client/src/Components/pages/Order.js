@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getMyInfo } from '../../utils/api';
+import { getMyInfo, getSingleFood } from '../../utils/api';
 import AuthService from '../../utils/auth';
 
 export default function Order() {
-    const [orderData, setOrderData] = useState({});
+    const [orderData, setOrderData] = useState([]);
     const token = AuthService.getToken();
 
     useEffect(() => {
@@ -15,7 +15,12 @@ export default function Order() {
                 }
                 const userData = await res.json();
                 const allUserOrders = userData.orders;
-                setOrderData(allUserOrders[allUserOrders.length-1]);
+                const currentOrder = allUserOrders[allUserOrders.length-1];
+                console.log(currentOrder)
+                const foodInfoRes = await Promise.all(currentOrder.food.map(async foodId => (await getSingleFood(foodId))));
+                const orderFoodData = await Promise.all(foodInfoRes.map(async res => (await res.json())));
+                console.log(orderFoodData)
+                setOrderData(orderFoodData);
             } catch (err) {
                 console.error(err);
             }
@@ -29,10 +34,10 @@ export default function Order() {
             <h2>Welcome, </h2>
             {orderData
                 ?
-                orderData.food.map((food) => (
-                    <div key={food} className="col-12">
+                orderData.map((food) => (
+                    <div key={food._id} className="col-12">
                         <div className="p-3">
-                            <p className="card-body">Name: {food} Price {food}</p>
+                            <p className="card-body">Name: {food.name} Price {food.price}</p>
                         </div>
                     </div>
                 ))
