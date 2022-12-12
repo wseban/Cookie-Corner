@@ -7,6 +7,7 @@ import Cater from './pages/Cater';
 import Footer from "./Footer";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
+import LoggedInMenu from "./pages/LoggedInMenu";
 import SignOut from "./SignOut";
 
 export default function Content() {
@@ -19,6 +20,7 @@ export default function Content() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/cater" element={<Cater />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orderForm" element={<LoggedInMenu />} />
         <Route path="/signout" element={<SignOut />} />
       </Routes>
       <div className="body"></div>

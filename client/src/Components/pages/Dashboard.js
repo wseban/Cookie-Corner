@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Row, Button, Card} from 'react-bootstrap';
+import { Container, Col, Row, Button, Card, ButtonGroup} from 'react-bootstrap';
 import { getMyInfo } from '../../utils/api';
 import AuthService from '../../utils/auth';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -94,19 +94,38 @@ export default function Dashboard() {
   }, [userDataLength]);
 
   if (!userDataLength) {
-    return <h2>LOADING...</h2>;
+    return <h2 className='p-4 text-center'>Loading...</h2>;
   }
   console.log("userDataLength 2: " + userDataLength);
 
-  // TBD: remove using testOrders below and use orders
+  const placeNewOrder = () => {
+    console.log('in placeNewOrder');
+    document.location.href = '/orderForm';
+  }
+
+  const requestCatering = () => {
+    console.log('in requestCatering');
+    document.location.href = '/cater';
+  }
 
   return (
     <Container className='mb-30' fluid>
           <h3 className='p-4 text-center'>Your Cookie Corner</h3>
           <h4 className='p-1 text-center'> {userName} </h4>
-          <div className="d-grid gap-1 w-50 mx-auto">
-          <Button variant='secondary' active>Place a new order</Button>
-          </div>
+
+          <Row className="justify-content-md-center">
+            <Col className="col-4 p-2 mt-5">
+              <ButtonGroup size="lg">
+                <Button variant='secondary m-1 justify-content-md-center' onClick={placeNewOrder} active>
+                  Place new order
+                </Button> 
+                <Button variant='secondary m-1 justify-content-md-center' onClick={requestCatering} active>
+                  Cater an event
+                </Button>
+              </ButtonGroup>
+            </Col>
+          </Row>
+
           <h4 className='text-center p-3'>
           {orders.length? `Your orders`: `You have no orders at present`}
           </h4>
