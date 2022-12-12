@@ -30,9 +30,9 @@ export default function Order() {
                     setOrderData(orderFoodData);
 
                     const priceData = await (orderFoodData.map(food => food.price));
-                    let calcSum=0;
-                    for(let i=0; i<priceData.length; i++){
-                        calcSum+=priceData[0];
+                    let calcSum = 0;
+                    for (let i = 0; i < priceData.length; i++) {
+                        calcSum += priceData[0];
                     }
                     setSum(calcSum)
 
@@ -51,9 +51,11 @@ export default function Order() {
                 <div className="row text-center">
                     <h2 className="m-3" style={{ fontSize: "300%" }}>Welcome, {userName}</h2>
                 </div>
+                <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
                 <div className="row" style={{ fontSize: "250%" }}>
-                    <p className="col-9"> Cookies</p>
-                    <p className="col-3">Price</p>
+                    <p className="col-6"> Cookies</p>
+                    <p className="col-3 text-center">Quantity</p>
+                    <p className="col-3 text-center">Price</p>
                 </div>
 
                 {orderData
@@ -61,8 +63,9 @@ export default function Order() {
                     orderData.map((food) => (
                         <div key={food._id}>
                             <div className="row" style={{ fontSize: "150%" }}>
-                                <p className="col-9">{food.name}</p>
-                                <p className="col-3">${food.price}</p>
+                                <p className="col-6">{food.name}</p>
+                                <p className="col-3 text-center">num</p>
+                                <p className="col-3 text-center">${food.price}</p>
                             </div>
                         </div>
                     ))
@@ -71,25 +74,27 @@ export default function Order() {
                         <p>No cookies added to your order</p>
                     </div>
                 }
-                <div className="row" style={{ fontSize: "150%", width: "100%" }}>
-                    <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
-                    <div className=" mb-2 offset-md-9">
-                        <p className="">${sum}</p>
-                    </div>
+                <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
+                <div className="row" style={{ fontSize: "150%"}}>
+                    <p className="col-7"></p>
+                    <p className="col-2" style={{ fontSize: "125%"}}>Total Price:</p>
+                    <p className="col-3 mb-2 text-center" style={{ fontSize: "125%"}}>${sum}</p>
                 </div>
-                <div className="offset-md-9">
-                    <Button style={{ fontSize: "125%", backgroundColor: "#504A6D"}}>Confirm Order</Button>
+                <div className="row" style={{ fontSize: "150%"}}>
+                    <div className="col-10"></div>
+                <Button className="col-2" style={{ fontSize: "110%", backgroundColor: "#504A6D", color:"#eaded2", border:"none" }}>Confirm Order</Button>
                 </div>
             </div>
         )
     } else {
         return (
             <div className="container text-center" style={{ color: "#504A6D" }}>
-                <div>
-                    <h2>Welcome, {userName}</h2>
+                 <div className="row text-center">
+                    <h2 className="m-3" style={{ fontSize: "300%" }}>Welcome, {userName}</h2>
                 </div>
-                <div>
-                    <p>No cookies added to your order</p>
+                <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
+                <div className="row text-center">
+                    <p className="m-3" style={{ fontSize: "150%" }}>No cookies in your order</p>
                 </div>
             </div>
         )
