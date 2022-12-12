@@ -33,6 +33,7 @@ export default function LoginForm() {
       alert(err);
     }
     setLoginFormData({ email: '', password: '' });
+    document.location.href = '/dashboard';
   }
   return (
     <div className='border border-secondary rounded bg-light'>
@@ -44,22 +45,22 @@ export default function LoginForm() {
                     placeholder='Enter your email'
                     value={loginFormData.email}
                     onChange={handleOnChange}>
-
           </FormControl>
         </FormGroup>
         <FormGroup className='' id='password'>
           <FormLabel>Password</FormLabel>
-          <FormControl type='string'
+          <FormControl type='password'
                     name='password'
                     placeholder='Enter a password'
                     value={loginFormData.password}
                     onChange={handleOnChange}>
-
           </FormControl>
         </FormGroup>
+        <div className='text-center'>
         <Button className='btn-secondary mt-2' type='submit'>
           Login
         </Button>
+        </div>
       </Form>
     </div>
   )
