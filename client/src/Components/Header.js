@@ -38,9 +38,6 @@ function Header() {
             <Link to="/dashboard" style={{ textDecoration: 'none' }}>Dashboard</Link>
           </li>
           <li className="nav-item m-2" style={{fontSize: "36px"}}>
-            <Link to="/cater" style={{ textDecoration: 'none' }}>Cater</Link>
-          </li>
-          <li className="nav-item m-2" style={{fontSize: "36px"}}>
             <Link to="/signout" style={{ textDecoration: 'none' }}>Sign out</Link>
           </li>
         </ul>
