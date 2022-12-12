@@ -35,6 +35,7 @@ export default function SignupForm() {
       alert(err);
     }
     setSignupFormData({fullName: '', email: '', password: ''});
+    document.location.href = '/dashboard';
 
   }
   return (
@@ -60,16 +61,18 @@ export default function SignupForm() {
         </FormGroup>
         <FormGroup className='' id='password'>
           <FormLabel>Password</FormLabel>
-          <FormControl type='string' 
+          <FormControl type='password' 
                       name='password' 
                       placeholder='Enter a password'
                       value={signupFormData.password}
                       onChange={handleOnChange}>
           </FormControl>
         </FormGroup>
+        <div className='text-center'>
         <Button className='btn-secondary mt-2' type='submit'>
           Sign Up
         </Button>
+        </div>
       </Form>
     </div>
   )

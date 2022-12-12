@@ -1,54 +1,60 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+
 import '../styles/navStyle.css';
+import AuthService from '../utils/auth';
 
-function Header({ currentPage, changePage }) {
-
-
-    return (
-      <header className='hstack gap-3' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
-      <h1  style={{color:"#eaded2", paddingLeft: "10px"}}>Cookie Monster's Cookie Corner</h1>
-      <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
-        <li className="nav-item" style={{fontSize: "36px"}}>
-          <a
-            // style={{color:"#eaded2"}}
-            href="#home"
-            onClick={() => changePage('Home')}
-            className={currentPage === 'Home' ? 'nav-link active' : 'nav-link'}
-          >
-            Home
-          </a>
-        </li>
-        <li className="nav-item" style={{fontSize: "36px"}}>
-          <a
-            href="#menu"
-            onClick={() => changePage('Menu')}
-            className={currentPage === 'Menu' ? 'nav-link active' : 'nav-link'}
-          >
-            Menu
-          </a>
-        </li>
-        <li className="nav-item" style={{fontSize: "36px"}}>
-          <a
-            href="#signin"
-            onClick={() => changePage('Signin')}
-            className={currentPage === 'Signin' ? 'nav-link active' : 'nav-link'}
-          >
-            Order
-          </a>
-        </li>
-        <li className="nav-item" style={{fontSize: "36px"}}>
-          <a
-            href="#cater"
-            onClick={() => changePage('Cater')}
-            className={currentPage === 'Cater' ? 'nav-link active' : 'nav-link'}
-          >
-            Cater
-          </a>
-        </li>
-      </ul>
-      </header>
-    );
+function Header() {
+  function showNavBar() {
+    /* if user is not logged in, show Home, Menu, Order, Cater */
+    /* is user is logged in, show Home, Menu, Sign out, Cater */
+    if(!AuthService.isLoggedIn()){
+      return (
+        <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/menu" style={{ textDecoration: 'none' }}>Menu</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/signin" style={{ textDecoration: 'none' }}>Order</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/cater" style={{ textDecoration: 'none' }}>Cater</Link>
+          </li>
+        </ul>
+      );
+    } else {
+      return (
+        <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/menu" style={{ textDecoration: 'none' }}>Menu</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/dashboard" style={{ textDecoration: 'none' }}>Dashboard</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/cater" style={{ textDecoration: 'none' }}>Cater</Link>
+          </li>
+          <li className="nav-item m-2" style={{fontSize: "36px"}}>
+            <Link to="/signout" style={{ textDecoration: 'none' }}>Sign out</Link>
+          </li>
+        </ul>
+      );
+    };  
   }
-  
-  export default Header;
-  
+  return (
+    <header className='hstack gap-3' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
+    <h1  style={{color:"#eaded2", paddingLeft: "10px"}}>Cookie Monster's Cookie Corner</h1>
+    <nav className="ml-50">
+      {showNavBar()}
+    </nav>
+    </header>
+  );
+}
+
+export default Header;
