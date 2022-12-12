@@ -1,12 +1,15 @@
 import React from "react";
+import AuthService from "../../utils/auth";
+import LoggedInMenu from "./LoggedInMenu";
+import LoggedOutMenu from "./LoggedOutMenu";
 
 
-export default function Menu(){
+export default function Menu() {
 
-    return (
-        <div>
-           Menu 
-        </div>
-    )
-    
+    if (AuthService.isLoggedIn()) {
+        return (<LoggedInMenu />);
+    } else {
+        return (<LoggedOutMenu />);
     }
+
+}
