@@ -11,78 +11,10 @@ import WalnutCookie from "../assets/WalnutCookie.png";
 
 export default function LoggedOutMenu() {
     return (
-        <Container className="mb-30" fluid>
-            <Row xs={1} md={3} className="justify-content-center">
-                    <Col className="col-6 p-2 mt-5">
-                        <Card className="border-0" style= {{backgroundColor:"#DBBDC7", maxWidth: "200px"}}>
-                            <Card.Img variant="top" src={BrownChocolateChipCookie} />
-                            <Card.Body>
-                                <Card.Title>Card title</Card.Title>
-                                <Card.Text>
-                                    This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit
-                                    longer.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className="col-6 p-2 mt-5">
-                        <Card className="border-0" style= {{backgroundColor:"#DBBDC7", maxWidth: "200px"}}>
-                            <Card.Img variant="top" src={CherryCheesecakeCookie} />
-                            <Card.Body>
-                                <Card.Title>Card title</Card.Title>
-                                <Card.Text>
-                                    This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit
-                                    longer.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className="col-6 p-2 mt-5">
-                        <Card className="border-0" style= {{backgroundColor:"#DBBDC7", maxWidth: "200px"}}>
-                            <Card.Img variant="top" src={ChocolateCookie} />
-                            <Card.Body>
-                                <Card.Title>Card title</Card.Title>
-                                <Card.Text>
-                                    This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit
-                                    longer.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className="col-6 p-2 mt-5">
-                        <Card className="border-0" style= {{backgroundColor:"#DBBDC7", maxWidth: "200px"}}>
-                            <Card.Img variant="top" src={PeanutButterCookie} />
-                            <Card.Body>
-                                <Card.Title>Card title</Card.Title>
-                                <Card.Text>
-                                    This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit
-                                    longer.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className="col-6 p-2 mt-5">
-                        <Card className="border-0" style= {{backgroundColor:"#DBBDC7", maxWidth: "200px"}}>
-                            <Card.Img variant="top" src={WalnutCookie} />
-                            <Card.Body>
-                                <Card.Title>Card title</Card.Title>
-                                <Card.Text>
-                                    This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit
-                                    longer.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-            </Row>
-
-            <Row className="justify-content-center">
-                <Col className="col-4 p-2 mt-5">
-                    <p style={{ fontSize: "150%", color: "#504A6D" }}> Click icon to download our menu
+        <Container className="mb-30 col-8">
+            <Row className="justify-content-center pb-2">
+                <Col className="col-6 p-2 mt-5">
+                    <p className="text-center" style={{ fontSize: "150%", color: "#504A6D" }}> Click icon to download our menu
                         <a
                             className="btn justify-content-md-center mx-1"
                             href={Menu}
@@ -93,6 +25,71 @@ export default function LoggedOutMenu() {
                     </p>
                 </Col>
             </Row>
-        </Container>
+
+            <Row className="justify-content-center">
+                <Col className="col-12">
+                    <Card className="flex-row border-0 m-2" style={{ backgroundColor: "#DBBDC7", maxWidth: "200px" }}>
+                        <Card.Title className="text-center pt-3 pr-3" style={{ fontSize: "125%", color: "#504A6D" }}>
+                            Brown Chocolate Chip Cookie</Card.Title>
+                        <Card.Img variant="top"
+                            src={BrownChocolateChipCookie}
+                            style={{ maxWidth: "150px", maxHeight: "150px" }} />
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row className="justify-content-center">
+                <Col className="col-12">
+                    <Card className="flex-row border-0 m-2" style={{ backgroundColor: "#DBBDC7", maxWidth: "200px" }}>
+                        <Card.Title className="text-center pt-3 pr-3" style={{ fontSize: "125%", color: "#504A6D" }}>
+                            Cherry Cheesecake Cookie</Card.Title>
+                        <Card.Img variant="top"
+                            src={CherryCheesecakeCookie}
+                            style={{ maxWidth: "150px", maxHeight: "150px" }} />
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row className="justify-content-center">
+                <Col className="col-12">
+                    <Card className="flex-row border-0 m-2" style={{ backgroundColor: "#DBBDC7", maxWidth: "200px" }}>
+                        <Card.Title className="text-center pt-3 pr-3" style={{ fontSize: "125%", color: "#504A6D" }}>
+                            Chocolate Cookie</Card.Title>
+                        <Card.Img variant="top"
+                            src={ChocolateCookie}
+                            style={{ maxWidth: "150px", maxHeight: "150px" }} />
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row className="justify-content-center">
+                <Col className="col-12 pl-4">
+                    <Card className="flex-row border-0 m-2" style={{ backgroundColor: "#DBBDC7", maxWidth: "200px" }}>
+                        <Card.Title className="text-center pt-3 pr-3" style={{ fontSize: "125%", color: "#504A6D" }}>
+                            Peanut Butter Cookie</Card.Title>
+                        <Card.Img variant="top"
+                            src={PeanutButterCookie}
+                            style={{ maxWidth: "150px", maxHeight: "150px" }} />
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row className="justify-content-center pb-5">
+                <Col className="col-12 pl-4">
+                    <Card className="flex-row border-0 m-2" style={{ backgroundColor: "#DBBDC7", maxWidth: "200px" }}>
+                        <Card.Title className="text-center pt-3 pr-3" style={{ fontSize: "125%", color: "#504A6D" }}>
+                            Walnut Cookie</Card.Title>
+                        <Card.Img variant="top"
+                            src={WalnutCookie}
+                            style={{ maxWidth: "150px", maxHeight: "150px" }} />
+                    </Card>
+                </Col>
+            </Row>
+            <Row className="pt-2">
+                <p>
+
+                </p>
+            </Row>
+        </Container >
     )
 }
