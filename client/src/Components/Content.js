@@ -5,6 +5,7 @@ import Menu from './pages/Menu';
 import Cater from './pages/Cater';
 import Footer from "./Footer";
 import SignIn from "./pages/SignIn";
+import Dashboard from "./pages/Dashboard";
 
 export default function Content() {
     const [currentPage, setCurrentPage] = useState('Home');
@@ -17,6 +18,9 @@ export default function Content() {
         }
         if (currentPage === 'Signin') {
           return <SignIn />;
+        }
+        if (currentPage === 'Dashboard') {
+          return <Dashboard />;
         }
         return <Cater />;
       };

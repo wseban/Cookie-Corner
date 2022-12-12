@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles/navStyle.css';
+import AuthService from '../utils/auth';
 
 function Header({ currentPage, changePage }) {
 
@@ -28,13 +29,20 @@ function Header({ currentPage, changePage }) {
           </a>
         </li>
         <li className="nav-item" style={{fontSize: "36px"}}>
+          {AuthService.isLoggedIn()?
+          <a href="#dashboard"
+          onClick={() => changePage('Dashboard')}
+          className={currentPage === 'Dashboard' ? 'nav-link active' : 'nav-link'}
+          >
+          Sign out
+          </a>:
           <a
             href="#signin"
             onClick={() => changePage('Signin')}
             className={currentPage === 'Signin' ? 'nav-link active' : 'nav-link'}
           >
-            Order
-          </a>
+          Order
+          </a>}
         </li>
         <li className="nav-item" style={{fontSize: "36px"}}>
           <a
