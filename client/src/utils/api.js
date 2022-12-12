@@ -36,3 +36,12 @@ export const getMyInfo = (token) => {
         }
     });
 }
+
+export const getSingleFood = (foodId) => {
+    return fetch(`api/cookies/${foodId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+};
