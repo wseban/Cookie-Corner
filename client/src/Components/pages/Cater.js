@@ -23,13 +23,20 @@ export default function Contact() {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(formState.email)
 
-    console.log(validateEmail(formState.email))
-    if (!validateEmail(formState.email) || !formState.message || !formState.name) {
-      return handleShow()
+    /* if user is logged in, get name and email from token */
+    if(AuthService.isLoggedIn()) {
+      const userData = AuthService.getUserFromToken();
+      formState.name = userData.data.fullName;
+      formState.email = userData.data.email;
+    } else {
+      console.log(formState.email)
+      console.log(validateEmail(formState.email))
+      if (!validateEmail(formState.email) || !formState.message || !formState.name) {
+        return handleShow()
+      }
     }
-    setFormState({ email: "", name: "", message: "" })
+
     console.log(formState)
     emailjs.send('service_9nf8itl', 'template_858brqf', {formState}, 'C8S5M9CyzbHsWjtS2')
       .then(function (response) {
@@ -37,6 +44,7 @@ export default function Contact() {
       }, function (error) {
         console.log('FAILED...', error);
       });
+    setFormState({ email: "", name: "", message: "" })
 
   };
 
