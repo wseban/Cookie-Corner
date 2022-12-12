@@ -27,18 +27,28 @@ class AuthService {
       return false;
     }
     /* token exists, user is still logged in */
+    if(this.checkTokenExpired(token)) {
+      /* token expired, we removed it, not logged in */
+      return false;
+    }
+    /* token exists, is not expired, we are logged in */
     return true;
   }
 
   checkTokenExpired(token) {
-    /* decode token and get expire time */
-    const userData = decode(token);
-    if(userData.exp > Date.now / 1000) {
-      /* hasn't expired yet */
+    try {
+      /* decode token and get expire time */
+      const userData = decode(token);
+      if(userData.exp > Date.now() / 1000) {
+        /* hasn't expired yet */
+        return false;
+      }
+      /* has expired */
+      this.deleteToken();
+      return true;
+    } catch (err) {
       return false;
     }
-    /* has expired */
-    return true;
   }
 
   deleteToken() {
