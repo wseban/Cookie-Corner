@@ -7,7 +7,7 @@ module.exports = {
     if (!allQuantity) {
       return res.status(400).json({ message: 'There are no cookies' })
     }
-    res.status(200).json(allFood);
+    res.status(200).json(allQuantity);
   },
 
   async createQuantity(req, res) {
