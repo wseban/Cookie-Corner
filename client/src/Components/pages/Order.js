@@ -29,20 +29,21 @@ export default function Order() {
                 const orderDataRes = await response.json();
 
                 if (orderDataRes) {
-                    console.log(JSON.stringify(orderDataRes));
                     setOrderName(orderDataRes.orderData.orderName);
-                    console.log(orderDataRes.orderData.orderName);
                     setFoods(orderDataRes.orderData.quantity);
-                    console.log(`food order each${JSON.stringify(orderDataRes.orderData.quantity)}`);
+                    // console.log(`orderdataaaa ${JSON.stringify(orderDataRes.orderData)}`);
+                    // console.log(`food order each${JSON.stringify(orderDataRes.orderData.quantity)}`);
+                    const foodArr = JSON.parse(JSON.stringify(orderDataRes.orderData.quantity));
                     setDelivery(orderDataRes.orderData.deliveryDate);
-                    console.log(orderDataRes.orderData.deliveryDate);
+                    setUpdateOrderFoods(foodArr);
+                     console.log(`setupdateorderinitial${JSON.stringify(foodArr)}`);
                 }
 
-                const priceData = await (orderDataRes.orderData.food.map(food => food.price));
+                const priceData = await (orderDataRes.orderData.quantity.map(food => food.quantity * food.foodId.price));
 
                 let calcSum = 0;
                 for (let i = 0; i < priceData.length; i++) {
-                    calcSum += priceData[0];
+                    calcSum += priceData[i];
                 }
                 setSum(calcSum)
 
@@ -53,12 +54,11 @@ export default function Order() {
         getOrderInfo();
     }, [orderId, token]);
 
-    const foodArr = JSON.parse(JSON.stringify(orderFoods));
-    console.log(`foooodarrrrr${JSON.stringify(foodArr)}`)
+    //const foodArr = JSON.parse(JSON.stringify(orderFoods));
+    //console.log(`foooodarrrrr${JSON.stringify(foodArr)}`)
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
-        console.log(`this is the value${value}`)
         const index = event.target.getAttribute("index")
         if (name === 'orderName') {
             if (value === '') {
@@ -69,7 +69,7 @@ export default function Order() {
         }
         if (name === 'quantity') {
             if (updateOrderFoods.length < 1) {
-                const foodArrUpdate = foodArr.map((foodItem, j) => {
+                const foodArrUpdate = updateOrderFoods.map((foodItem, j) => {
                     if (index == j) {
 
                         if (value === "") {
@@ -82,7 +82,12 @@ export default function Order() {
                         return foodItem
                     }
                 })
-                setUpdateOrderFoods(foodArrUpdate)
+                const priceData = (foodArrUpdate.map(food => food.quantity * food.foodId.price));
+                let calcSum = 0;
+                for (let i = 0; i < priceData.length; i++) {
+                    calcSum += priceData[i];
+                }
+                setSum(calcSum)
             } else {
                 const foodArrUpdate = updateOrderFoods.map((foodItem, j) => {
                     if (index == j) {
@@ -97,13 +102,20 @@ export default function Order() {
                         return foodItem
                     }
                 })
+                const priceData = (foodArrUpdate.map(food => food.quantity * food.foodId.price));
+                let calcSum = 0;
+                for (let i = 0; i < priceData.length; i++) {
+                    calcSum += priceData[i];
+                }
+                setSum(calcSum)
                 setUpdateOrderFoods(foodArrUpdate)
-            }
+                console.log(`iiiwantdaaattaaaa ${JSON.stringify(updateOrderFoods[1])}`);
+           }
         }
     }
 
-    console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
-    console.log(`reeeeeeggg fod ${JSON.stringify(orderFoods)}`);
+     console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
+     console.log(`reeeeeeggg fod ${JSON.stringify(orderFoods)}`);
 
     const handleUpdateForm = async (event) => {
         event.preventDefault();
@@ -128,18 +140,18 @@ export default function Order() {
             }
 
 
-            for (let i = 0; i<updateData.food.length; i++) {
+            for (let i = 0; i < updateData.food.length; i++) {
                 const quantityId = updateData.food[i]._id;
-                const updateQuantityData = {quantity:`${updateData.food[i].quantity}`};
-                console.log(`quantityId ${JSON.stringify(quantityId)}`)
-                console.log(`quantitydata ${JSON.stringify(updateQuantityData)}`)
-                 const response = await updateQuantity(token, quantityId, updateQuantityData);
+                const updateQuantityData = { quantity: `${updateData.food[i].quantity}` };
+                // console.log(`quantityId ${JSON.stringify(quantityId)}`)
+                // console.log(`quantitydata ${JSON.stringify(updateQuantityData)}`)
+                const response = await updateQuantity(token, quantityId, updateQuantityData);
 
-                 if (!response.ok) {
-                     throw new Error(response.message);
-                 }
+                if (!response.ok) {
+                    throw new Error(response.message);
+                }
             }
-            console.log(`submitted data ${JSON.stringify(updateData)}`);
+            //console.log(`submitted data ${JSON.stringify(updateOrderFoods)}`);
 
         } catch (err) {
             alert(err);
@@ -148,57 +160,9 @@ export default function Order() {
 
     }
 
+
     return (
         <Container fluid>
-            {/* <Row className="text-center" style={{ fontSize: "300%" }}>
-                <Col xs={12}>
-                    Order: {orderName}
-                </Col>
-            </Row>
-            <Row style={{ fontSize: "250%" }}>
-                <Col xs={6}>
-                    Cookies
-                </Col>
-                <Col xs={3} className="text-center">
-                    Quantity
-                </Col>
-                <Col xs={3} className="text-center">
-                    Price
-                </Col>
-            </Row>
-
-            {orderFoods
-                ?
-                orderFoods.map((food) => (
-                    <>
-                        <Row style={{ fontSize: "150%" }}>
-                            <Col xs={6}>
-                                {food.name}
-                            </Col>
-                            <Col xs={3} className="text-center">
-                                num
-                            </Col>
-                            <Col xs={3} className="text-center">
-                                ${food.price}
-                            </Col>
-                        </Row>
-                    </>
-                ))
-                :
-                <div>
-                    <p>No cookies added to your order</p>
-                </div>
-            }
-
-            <Row style={{ fontSize: "175%" }}>
-                <Col xs={6}></Col>
-                <Col xs={3} className="text-center">
-                    Total Price
-                </Col>
-                <Col xs={3} className="text-center">
-                    ${sum}
-                </Col>
-            </Row> */}
             <Form
                 onSubmit={handleUpdateForm}
             >
@@ -229,13 +193,13 @@ export default function Order() {
                     </Col>
                 </Row>
 
-                {orderFoods
+                {updateOrderFoods.length
                     ?
-                    orderFoods.map((food, i) => (
+                    updateOrderFoods.map((food, i) => (
                         <>
                             <Row style={{ fontSize: "150%" }}>
                                 <Col xs={6}>
-                                    {food.foodId.name}
+                                    {food.foodId.name}uuuuu
                                 </Col>
                                 <Col xs={3} className="text-center">
                                     <FormGroup className='' id='name'>
@@ -248,45 +212,56 @@ export default function Order() {
                                         </FormControl>
                                     </FormGroup>
                                 </Col>
+
                                 <Col xs={3} className="text-center">
-                                    ${food.foodId.price * food.quantity}
+                                    ${food.foodId.price*food.quantity}
                                 </Col>
+
                             </Row>
                         </>
                     ))
                     :
-                    <div>
-                        <p></p>
-                    </div>
+                    orderFoods.map((food, i) => (
+                        <>
+                            {/* <Row style={{ fontSize: "150%" }}>
+                                <Col xs={6}>
+                                    {food.foodId.name}jjjj
+                                </Col>
+                                <Col xs={3} className="text-center">
+                                    <FormGroup className='' id='name'>
+                                        <FormControl type='string'
+                                            name='quantity'
+                                            index={i}
+                                            placeholder={food.quantity ? food.quantity : 0}
+                                            onChange={handleOnChange}
+                                        >
+                                        </FormControl>
+                                    </FormGroup>
+                                </Col>
+
+                                <Col xs={3} className="text-center">
+                                    ${food.foodId.price*food.quantity}
+                                </Col>
+
+                            </Row> */}
+                        </>
+                    ))
                 }
+
+                <Row style={{ fontSize: "175%" }}>
+                    <Col xs={6}></Col>
+                    <Col xs={3} className="text-center">
+                        Total Price
+                    </Col>
+                    <Col xs={3} className="text-center">
+                        ${sum}
+                    </Col>
+                </Row>
 
                 <Button className='btn-secondary mt-2' type='submit'>
                     Sign Up
                 </Button>
 
-                {/* <FormGroup className='' id='email'>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl type='string'
-                        name='email'
-                        placeholder='Enter your email'
-                        value={signupFormData.email}
-                        onChange={handleOnChange}>
-                    </FormControl>
-                </FormGroup>
-                <FormGroup className='' id='password'>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl type='password'
-                        name='password'
-                        placeholder='Enter a password'
-                        value={signupFormData.password}
-                        onChange={handleOnChange}>
-                    </FormControl>
-                </FormGroup>
-                <div className='text-center'>
-                    <Button className='btn-secondary mt-2' type='submit'>
-                        Sign Up
-                    </Button>
-                </div> */}
             </Form>
 
         </Container>
