@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Tooltip, OverlayTrigger, InputGroup } from "react-bootstrap";
+import CookieCounter from "./CookieCounter";
+import { Container, Row, Col, Card, Button, InputGroup } from "react-bootstrap";
 import { getAllFoods } from '../../utils/api';
 import BrownChocolateChipCookie from "../assets/BrownChocolateChipCookie.png";
 import CherryCheesecakeCookie from "../assets/CherryCheesecakeCookie.png";
 import ChocolateCookie from "../assets/ChocolateCookie.png";
 import PeanutButterCookie from "../assets/PeanutButterCookie.png";
 import WalnutCookie from "../assets/WalnutCookie.png";
-import { BsFillBagDashFill, BsFillBagPlusFill } from "react-icons/bs";
-import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
+import { FaShoppingCart} from "react-icons/fa";
 
 
 export default function LoggedInMenu() {
@@ -19,7 +19,13 @@ export default function LoggedInMenu() {
         ChocolateCookie,
         PeanutButterCookie,
         WalnutCookie
-    ]
+    ];
+
+
+    
+
+
+
 
     useEffect(() => {
         const getAllCookies = async () => {
@@ -39,6 +45,7 @@ export default function LoggedInMenu() {
                     cookieData[i].picture = getImportName(cookieData[i].picture);
                 }
                 console.log(cookieData);
+
             }
         }
 
@@ -55,6 +62,10 @@ export default function LoggedInMenu() {
     const cart = () => {
         document.location.href = '/viewOrder';
     }
+
+
+
+
 
     return (
         <Container className="pb-5">
@@ -75,51 +86,23 @@ export default function LoggedInMenu() {
                                         <Card.Text style={{ fontSize: "125%", color: "#504A6D" }}>
                                             Ingredients: {item.ingredients}
                                         </Card.Text>
-                                        <Button className="justify-content-center border-0 m-2" style={{ backgroundColor: "#504A6D" }} active>
-                                            <BsFillBagDashFill color="#eaded2" size={30} />
-                                        </Button>
-                                        <Button className="justify-content-center border-0 m-2" style={{ backgroundColor: "#504A6D" }} active>
-                                            <BsFillBagPlusFill color="#eaded2" size={30} />
-                                        </Button>
-                                        {/* <>
-                                        {['right'].map((placement) => (
-                                            <OverlayTrigger
-                                                key={placement}
-                                                placement={placement}
-                                                overlay={
-                                                    <Tooltip id={`tooltip-${placement}`}>
-                                                        <strong>You add "" cookie </strong>
-                                                    </Tooltip>
-                                                }
-                                            >
-                                                <Button className="border-0 m-2" style={{ color: "#eaded2", backgroundColor: "#504A6D" }}> Quantity </Button>
-                                            </OverlayTrigger>
-                                        ))}
-                                    </> */}
-                                    <InputGroup className="col-2 border-0 m-2">
-                                        <InputGroup.Text style={{ color: "#eaded2", backgroundColor: "#504A6D" }}><FaShoppingCart color="#eaded2" size={20}/></InputGroup.Text>
-                                        <InputGroup.Text style={{ color: "#eaded2", backgroundColor: "#504A6D" }}>0</InputGroup.Text>
-                                    </InputGroup>
-                                    <InputGroup className="col-2 border-0 m-2">
-                                        <InputGroup.Text style={{ color: "#eaded2", backgroundColor: "#504A6D" }}><FaDollarSign color="#eaded2" size={20}/></InputGroup.Text>
-                                        <InputGroup.Text style={{ color: "#eaded2", backgroundColor: "#504A6D" }}>0</InputGroup.Text>
-                                    </InputGroup>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
+                                       <CookieCounter price={item.price}/>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
                     </Container>
-    );
-})}
+                );
+            })}
 
-<Row className="justify-content-md-center">
-    <Col className="col-2 pb-5">
-        <Button className="border-0 m-2" style={{ backgroundColor: "#504A6D" }} onClick={cart} active>
-            View order
-            <FaShoppingCart color="#eaded2" size={30} />
-        </Button>
-    </Col>
-</Row>
+            <Row className="justify-content-md-center">
+                <Col className="col-2 pb-5">
+                    <Button className="border-0 m-2" style={{ backgroundColor: "#504A6D" }} onClick={cart} active>
+                        View order
+                        <FaShoppingCart color="#eaded2" size={30} />
+                    </Button>
+                </Col>
+            </Row>
         </Container >
 
 
