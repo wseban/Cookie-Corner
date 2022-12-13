@@ -36,7 +36,7 @@ export default function Order() {
                     const foodArr = JSON.parse(JSON.stringify(orderDataRes.orderData.quantity));
                     setDelivery(orderDataRes.orderData.deliveryDate);
                     setUpdateOrderFoods(foodArr);
-                     console.log(`setupdateorderinitial${JSON.stringify(foodArr)}`);
+                    console.log(`setupdateorderinitial${JSON.stringify(foodArr)}`);
                 }
 
                 const priceData = await (orderDataRes.orderData.quantity.map(food => food.quantity * food.foodId.price));
@@ -110,12 +110,12 @@ export default function Order() {
                 setSum(calcSum)
                 setUpdateOrderFoods(foodArrUpdate)
                 console.log(`iiiwantdaaattaaaa ${JSON.stringify(updateOrderFoods[1])}`);
-           }
+            }
         }
     }
 
-     console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
-     console.log(`reeeeeeggg fod ${JSON.stringify(orderFoods)}`);
+    console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
+    console.log(`reeeeeeggg fod ${JSON.stringify(orderFoods)}`);
 
     const handleUpdateForm = async (event) => {
         event.preventDefault();
@@ -162,17 +162,17 @@ export default function Order() {
 
 
     return (
-        <Container fluid>
+        <Container style={{ color: "#504A6D" }} fluid>
             <Form
                 onSubmit={handleUpdateForm}
             >
-                <Row className="text-center" style={{ fontSize: "300%" }}>
-                    <Col xs={6}>
-                        Order Name:
-                    </Col>
-                    <Col xs={6}>
-                        <FormGroup className='' id='name'>
-                            <FormControl type='string'
+                <Row className='d-flex justify-content-center text-center' style={{ fontSize: "300%", borderBottom: "solid 5px #ff69b4" }}>
+
+                    <FormLabel className="col-sm-4 col-form-label">Order Name</FormLabel>
+
+                    <Col className='m-auto' xs={8}>
+                        <FormGroup id='name'>
+                            <FormControl size="lg" type='string'
                                 name='orderName'
                                 placeholder={orderName}
                                 onChange={handleOnChange}
@@ -199,7 +199,7 @@ export default function Order() {
                         <>
                             <Row style={{ fontSize: "150%" }}>
                                 <Col xs={6}>
-                                    {food.foodId.name}uuuuu
+                                    {food.foodId.name}
                                 </Col>
                                 <Col xs={3} className="text-center">
                                     <FormGroup className='' id='name'>
@@ -214,7 +214,7 @@ export default function Order() {
                                 </Col>
 
                                 <Col xs={3} className="text-center">
-                                    ${food.foodId.price*food.quantity}
+                                    ${food.foodId.price * food.quantity}
                                 </Col>
 
                             </Row>
@@ -225,7 +225,7 @@ export default function Order() {
                         <>
                             {/* <Row style={{ fontSize: "150%" }}>
                                 <Col xs={6}>
-                                    {food.foodId.name}jjjj
+                                    {food.foodId.name}
                                 </Col>
                                 <Col xs={3} className="text-center">
                                     <FormGroup className='' id='name'>
@@ -248,7 +248,7 @@ export default function Order() {
                     ))
                 }
 
-                <Row style={{ fontSize: "175%" }}>
+                <Row style={{ fontSize: "175%", borderBottom: "solid 5px #ff69b4" }}>
                     <Col xs={6}></Col>
                     <Col xs={3} className="text-center">
                         Total Price
@@ -258,68 +258,17 @@ export default function Order() {
                     </Col>
                 </Row>
 
-                <Button className='btn-secondary mt-2' type='submit'>
-                    Sign Up
-                </Button>
+                <Row style={{ fontSize: "175%"}}>
+                    <Col xs={9}></Col>
+                    <Col xs={3} className="text-center">
+                        <Button className='mt-2' type='submit' size="lg" style={{ fontSize: "110%", backgroundColor: "#504A6D", color: "#eaded2", border: "none" }}>
+                            Update Order
+                        </Button>
+                    </Col>
+                </Row>
 
             </Form>
 
         </Container>
     )
-
-    // if (orderData.length > 0) {
-    //     return (
-
-    //         <div className="container" style={{ color: "#504A6D" }}>
-    //             <div className="row text-center">
-    //                 <h2 className="m-3" style={{ fontSize: "300%" }}>Order: {userName}</h2>
-    //             </div>
-    //             <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
-    //             <div className="row" style={{ fontSize: "250%" }}>
-    //                 <p className="col-6"> Cookies</p>
-    //                 <p className="col-3 text-center">Quantity</p>
-    //                 <p className="col-3 text-center">Price</p>
-    //             </div>
-
-    //             {orderData
-    //                 ?
-    //                 orderData.map((food) => (
-    //                     <div key={food._id}>
-    //                         <div className="row" style={{ fontSize: "150%" }}>
-    //                             <p className="col-6">{food.name}</p>
-    //                             <p className="col-3 text-center">num</p>
-    //                             <p className="col-3 text-center">${food.price}</p>
-    //                         </div>
-    //                     </div>
-    //                 ))
-    //                 :
-    //                 <div>
-    //                     <p>No cookies added to your order</p>
-    //                 </div>
-    //             }
-    //             <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
-    //             <div className="row" style={{ fontSize: "150%" }}>
-    //                 <p className="col-7"></p>
-    //                 <p className="col-2" style={{ fontSize: "125%" }}>Total Price:</p>
-    //                 <p className="col-3 mb-2 text-center" style={{ fontSize: "125%" }}>${sum}</p>
-    //             </div>
-    //             <div className="row" style={{ fontSize: "150%" }}>
-    //                 <div className="col-10"></div>
-    //                 <Button className="col-2" style={{ fontSize: "110%", backgroundColor: "#504A6D", color: "#eaded2", border: "none" }}>Confirm Order</Button>
-    //             </div>
-    //         </div>
-    //     )
-    // } else {
-    //     return (
-    //         <div className="container text-center" style={{ color: "#504A6D" }}>
-    //             <div className="row text-center">
-    //                 <h2 className="m-3" style={{ fontSize: "300%" }}>Welcome, {userName}</h2>
-    //             </div>
-    //             <hr style={{ borderTop: "solid 5px #ff69b4" }}></hr>
-    //             <div className="row text-center">
-    //                 <p className="m-3" style={{ fontSize: "150%" }}>No cookies in your order</p>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 }
