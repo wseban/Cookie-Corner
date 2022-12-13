@@ -30,7 +30,7 @@ export const createOrder = (token, orderData) => {
 };
 
 export const getOneOrder = (token, orderId ) => {
-    return fetch( `/api/orders/${orderId}`, {
+    return fetch( `/api/order/${orderId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const getOneOrder = (token, orderId ) => {
 }
 
 export const updateOrder = (token, orderId, orderData) => {
-    return fetch( `/api/orders/${orderId}`, {
+    return fetch( `/api/order/${orderId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
