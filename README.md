@@ -71,10 +71,10 @@ If developing:
 
 ## Collaborators
 
-- Joseph Jensen, GitHub [https://github.com/joedjensen]
-- Swetha Pothuganti, GitHub [https://github.com/shwethareddy0]
 - William Seban, GitHub [https://github.com/wseban]
-- Angel Matias, GitHub [https://github.com/robogf]
+- Nichole Guan, Github [https://github.com/ncguan]
+- Priya Bhikshesvaran, [https://github.com/sbhikshe]
+- Mehmet Musabeyoğlu, [https://github.com/MehmetMusabeyoglu]
 
 ## License
 
