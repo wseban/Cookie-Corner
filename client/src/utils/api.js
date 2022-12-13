@@ -91,4 +91,14 @@ export const getMyInfo = (token) => {
     });
 }
 
-
+/* Quantity routes */
+export const updateQuantity = (token, quantityId, quantityData) => {
+    return fetch( `/api/quantity/${quantityId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(quantityData)
+    });
+}

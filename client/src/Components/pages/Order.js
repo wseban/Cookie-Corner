@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { getOneOrder } from '../../utils/api';
+import { getOneOrder, updateOrder, updateQuantity } from '../../utils/api';
 import AuthService from '../../utils/auth';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 export default function Order() {
-    const [orderData, setOrderData] = useState({});
     const [orderName, setOrderName] = useState();
     const [orderFoods, setFoods] = useState([]);
     const [orderDelivery, setDelivery] = useState();
     let { orderId } = useParams();
     const [sum, setSum] = useState(0);
+    const token = AuthService.getToken();
+
+    const [updateOrderName, setUpdateOrderName] = useState();
+    const [updateOrderFoods, setUpdateOrderFoods] = useState([]);
+    const [updateOrderDelivery, setUpdateOrderDelivery] = useState()
 
     useEffect(() => {
+
         const getOrderInfo = async () => {
-            const token = AuthService.getToken();
 
             try {
                 const response = await getOneOrder(token, orderId);
@@ -25,13 +29,13 @@ export default function Order() {
                 const orderDataRes = await response.json();
 
                 if (orderDataRes) {
+                    console.log(JSON.stringify(orderDataRes));
                     setOrderName(orderDataRes.orderData.orderName);
-                    console.log(orderDataRes.orderData.orderName)
-                    setFoods(orderDataRes.orderData.food);
-                    console.log(orderDataRes.orderData.food)
+                    console.log(orderDataRes.orderData.orderName);
+                    setFoods(orderDataRes.orderData.quantity);
+                    console.log(`food order each${JSON.stringify(orderDataRes.orderData.quantity)}`);
                     setDelivery(orderDataRes.orderData.deliveryDate);
-                    console.log(orderDataRes.orderData.deliveryDate)
-
+                    console.log(orderDataRes.orderData.deliveryDate);
                 }
 
                 const priceData = await (orderDataRes.orderData.food.map(food => food.price));
@@ -47,11 +51,106 @@ export default function Order() {
             }
         };
         getOrderInfo();
-    }, [orderId]);
+    }, [orderId, token]);
+
+    const foodArr = JSON.parse(JSON.stringify(orderFoods));
+    console.log(`foooodarrrrr${JSON.stringify(foodArr)}`)
+
+    const handleOnChange = (event) => {
+        const { name, value } = event.target;
+        console.log(`this is the value${value}`)
+        const index = event.target.getAttribute("index")
+        if (name === 'orderName') {
+            if (value === '') {
+                setUpdateOrderName(orderName)
+            } else {
+                setUpdateOrderName(value)
+            }
+        }
+        if (name === 'quantity') {
+            if (updateOrderFoods.length < 1) {
+                const foodArrUpdate = foodArr.map((foodItem, j) => {
+                    if (index == j) {
+
+                        if (value === "") {
+                            foodItem.quantity = orderFoods[j].quantity
+                        } else {
+                            foodItem.quantity = value
+                        }
+                        return foodItem;
+                    } else {
+                        return foodItem
+                    }
+                })
+                setUpdateOrderFoods(foodArrUpdate)
+            } else {
+                const foodArrUpdate = updateOrderFoods.map((foodItem, j) => {
+                    if (index == j) {
+
+                        if (value === "") {
+                            foodItem.quantity = orderFoods[j].quantity
+                        } else {
+                            foodItem.quantity = value
+                        }
+                        return foodItem;
+                    } else {
+                        return foodItem
+                    }
+                })
+                setUpdateOrderFoods(foodArrUpdate)
+            }
+        }
+    }
+
+    console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
+    console.log(`reeeeeeggg fod ${JSON.stringify(orderFoods)}`);
+
+    const handleUpdateForm = async (event) => {
+        event.preventDefault();
+
+        let foodArrData = [];
+
+        if (updateOrderFoods.length < 1) {
+            foodArrData = orderFoods
+        } else {
+            foodArrData = updateOrderFoods
+        }
+
+        const updateData = { orderName: updateOrderName, food: foodArrData };
+
+        try {
+            if (updateData.orderName) {
+                const response = await updateOrder(token, orderId, updateData);
+
+                if (!response.ok) {
+                    throw new Error(response.message);
+                }
+            }
+
+
+            for (let i = 0; i<updateData.food.length; i++) {
+                const quantityId = updateData.food[i]._id;
+                const updateQuantityData = {quantity:`${updateData.food[i].quantity}`};
+                console.log(`quantityId ${JSON.stringify(quantityId)}`)
+                console.log(`quantitydata ${JSON.stringify(updateQuantityData)}`)
+                 const response = await updateQuantity(token, quantityId, updateQuantityData);
+
+                 if (!response.ok) {
+                     throw new Error(response.message);
+                 }
+            }
+            console.log(`submitted data ${JSON.stringify(updateData)}`);
+
+        } catch (err) {
+            alert(err);
+        }
+        document.location.href = '/dashboard';
+
+    }
 
     return (
         <Container fluid>
-            <Row className="text-center" style={{ fontSize: "300%" }}>
+            {/* <Row className="text-center" style={{ fontSize: "300%" }}>
                 <Col xs={12}>
                     Order: {orderName}
                 </Col>
@@ -99,7 +198,96 @@ export default function Order() {
                 <Col xs={3} className="text-center">
                     ${sum}
                 </Col>
-            </Row>
+            </Row> */}
+            <Form
+                onSubmit={handleUpdateForm}
+            >
+                <Row className="text-center" style={{ fontSize: "300%" }}>
+                    <Col xs={6}>
+                        Order Name:
+                    </Col>
+                    <Col xs={6}>
+                        <FormGroup className='' id='name'>
+                            <FormControl type='string'
+                                name='orderName'
+                                placeholder={orderName}
+                                onChange={handleOnChange}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row style={{ fontSize: "250%" }}>
+                    <Col xs={6}>
+                        Cookies
+                    </Col>
+                    <Col xs={3} className="text-center">
+                        Quantity
+                    </Col>
+                    <Col xs={3} className="text-center">
+                        Price
+                    </Col>
+                </Row>
+
+                {orderFoods
+                    ?
+                    orderFoods.map((food, i) => (
+                        <>
+                            <Row style={{ fontSize: "150%" }}>
+                                <Col xs={6}>
+                                    {food.foodId.name}
+                                </Col>
+                                <Col xs={3} className="text-center">
+                                    <FormGroup className='' id='name'>
+                                        <FormControl type='string'
+                                            name='quantity'
+                                            index={i}
+                                            placeholder={food.quantity ? food.quantity : 0}
+                                            onChange={handleOnChange}
+                                        >
+                                        </FormControl>
+                                    </FormGroup>
+                                </Col>
+                                <Col xs={3} className="text-center">
+                                    ${food.foodId.price * food.quantity}
+                                </Col>
+                            </Row>
+                        </>
+                    ))
+                    :
+                    <div>
+                        <p></p>
+                    </div>
+                }
+
+                <Button className='btn-secondary mt-2' type='submit'>
+                    Sign Up
+                </Button>
+
+                {/* <FormGroup className='' id='email'>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl type='string'
+                        name='email'
+                        placeholder='Enter your email'
+                        value={signupFormData.email}
+                        onChange={handleOnChange}>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup className='' id='password'>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl type='password'
+                        name='password'
+                        placeholder='Enter a password'
+                        value={signupFormData.password}
+                        onChange={handleOnChange}>
+                    </FormControl>
+                </FormGroup>
+                <div className='text-center'>
+                    <Button className='btn-secondary mt-2' type='submit'>
+                        Sign Up
+                    </Button>
+                </div> */}
+            </Form>
 
         </Container>
     )
