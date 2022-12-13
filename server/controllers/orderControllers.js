@@ -68,6 +68,11 @@ module.exports = {
             if (!orderData) {
             res.status(404).json({ message: 'No order found' })
             } else {
+                const userData = await User.findOneAndUpdate(
+                    { _id: req.user._id },
+                    { $pull: { orders: orderData._id } },
+                    { new: true, runValidators: true }
+                );
                 res.json(orderData);
             }
         } catch(err) {
