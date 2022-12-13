@@ -62,14 +62,14 @@ module.exports = {
         try {
             console.log('in deleteOrder');
 
-            const orderData = await Order.findOneAndDelete(
+            const orderData = await Order.findOneAndRemove(
                 { _id: req.params.orderId }
                 );
             if (!orderData) {
                 return res.status(404).json({ message: 'No order found' });
             } else {
                 const userData = await User.findOneAndUpdate(
-                    { _id: req.user._id },
+                    { _id: req.body.userId },
                     { $pull: { orders: orderData._id } },
                     { new: true, runValidators: true }
                 );
