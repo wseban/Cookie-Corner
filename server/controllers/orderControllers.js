@@ -25,7 +25,7 @@ module.exports = {
             console.log('created order', JSON.stringify(newOrder));
 
             const updatedUser = await User.findOneAndUpdate(
-              { _id: req.user._id },
+              { _id: req.body.userId },
               { $addToSet: { orders: newOrder._id } },
               { new: true, runValidators: true }
             );
@@ -98,7 +98,13 @@ module.exports = {
     getOneOrder(req, res) {
         Order.findOne({ _id: req.params.orderId })
             .select('-__v')
-            .populate("food")
+            .populate({ 
+                path: 'quantity',
+                populate: {
+                  path: 'foodId',
+                  model: 'food'
+                } 
+             })
             .then((orderData) =>
                 !orderData
                     ? res.status(404).json({ message: 'No order found' })

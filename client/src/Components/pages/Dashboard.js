@@ -151,7 +151,7 @@ export default function Dashboard() {
                     <Card.Text>
                       Delivery Date: {order.deliveryDate}
                     </Card.Text>
-                    <Button variant='secondary m-2' onClick={() => handleEditOrder({order})}  active>
+                    <Button variant='secondary m-2'  onClick={handleEditOrder} data-id={order._id} active>
                       <FaEdit color="#eaded2" size={25} />
                     </Button>
                     <Button variant='secondary m-2' active>

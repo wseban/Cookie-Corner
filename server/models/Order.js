@@ -22,6 +22,12 @@ const orderSchema = new Schema(
                 ref: "food",
             },
         ],
+        quantity: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "quantity",
+            },
+        ],
     },
     {
         toJSON: {
