@@ -19,7 +19,7 @@ export const getSingleFood = (foodId) => {
 
 /* Order routes */
 export const createOrder = (token, orderData) => {
-    return fetch( '/api/orders/', {
+    return fetch( '/api/order/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

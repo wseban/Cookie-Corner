@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CookieCounter from "./CookieCounter";
-import { Container, Row, Col, Card, Button, ButtonGroup, Form } from "react-bootstrap";
-import { getAllFoods } from '../../utils/api';
+import { Container, Row, Col, Card, Button, ButtonGroup, Form, FormGroup } from "react-bootstrap";
+import { getAllFoods, createOrder } from '../../utils/api';
+import AuthService from '../../utils/auth';
 import BrownChocolateChipCookie from "../assets/BrownChocolateChipCookie.png";
 import CherryCheesecakeCookie from "../assets/CherryCheesecakeCookie.png";
 import ChocolateCookie from "../assets/ChocolateCookie.png";
@@ -10,8 +11,7 @@ import WalnutCookie from "../assets/WalnutCookie.png";
 import { FaShoppingCart } from "react-icons/fa";
 import { BsFillBagDashFill, BsFillBagPlusFill } from "react-icons/bs";
 
-
-export default function LoggedInMenu() {
+export default function OrderForm() {
 
     const [cookieData, setCookieData] = useState([]);
     const cookieImg = [
@@ -21,22 +21,6 @@ export default function LoggedInMenu() {
         PeanutButterCookie,
         WalnutCookie
     ];
-
-    // const [count, setCount] = useState([]);
-    // const handleIncrement = (i) => {
-    //     setCount(count[i] + 1);
-    //     console.log(count[i]);
-
-    // };
-
-    // const handleDecrement = (i) => {
-    //     if (count[i] > 0) {
-    //         setCount(count[i] - 1);
-    //     }
-    // };
-
-
-
 
     useEffect(() => {
         const getAllCookies = async () => {
@@ -70,17 +54,73 @@ export default function LoggedInMenu() {
         return importName[0];
     }
 
-    const cart = () => {
-        document.location.href = '/dashboard';
+    const [orderFormData, setOrderFormData] = useState({});
+    const [orderNameData, setOrderNameData] = useState();
+
+    function handleOnChange(event) {
+        const { name, value } = event.target;
+
+        if (name === 'orderName') {
+            setOrderNameData(value);
+          } else {
+          setOrderFormData({ ...orderFormData, [name]: value });
+          } 
+          
+          
+        console.log("!!!!!!!dglskjglksjgsdkl");
     }
 
+    function onSubmitOrder(event) {
+        event.preventDefault();
 
-    const orderItems = [];
+        console.log("orderName= "+ orderNameData);
+        console.log("orderFormData" + JSON.stringify(orderFormData));
+
+        const orderData = {
+            orderName: orderNameData,
+            quantity: orderFormData
+        };
+
+        console.log("ORDERDATA="+JSON.stringify(orderData));
+
+        sendNewOrder(orderData);
+
+ }
+
+    const sendNewOrder = async (orderData) => {
+        if(!AuthService.isLoggedIn) {
+            console.log('How did we get there with no one logged in?');
+            return;
+          } 
     
-    const addItemToOrder = (item) => {
-        const item = {};
-
-    };
+          console.log('isLoggedIn');
+          const token = AuthService.getToken();
+          if(!token) {
+            return;
+          }
+    
+          console.log('got token');
+    
+          /* token exists, check if expired */
+          if(AuthService.checkTokenExpired(token)) {
+            return;
+          } 
+    
+          console.log('token has not expired');
+    
+          /* use the api - to creating a new order */
+          const response = await createOrder(token, orderData);
+          if (!response.ok) {
+            console.log(response.ok);
+            return;
+          }
+    
+          console.log('getMyInfo returned');
+    
+          const newOrderData = await response.json();
+          console.log("New order= "+JSON.stringify(newOrderData));
+    
+    }
 
     return (
         <Container className="pb-5">
@@ -101,27 +141,6 @@ export default function LoggedInMenu() {
                                         <Card.Text style={{ fontSize: "125%", color: "#504A6D" }}>
                                             Ingredients: {item.ingredients}
                                         </Card.Text>
-                                        <Form onSubmit={() => addItemToOrder(item)}>
-                                            <Form.Group className="col-1 border-0 m-2" controlId="formBasic">
-                                                <Form.Control type="number" placeholder="0" />
-                                                <Form.Text className="text-muted"
-                                                    style={{ color: "#eaded2", backgroundColor: "#504A6D" }}>
-                                                    {/* <FaShoppingCart color="#eaded2" size={20} /> */}
-                                                </Form.Text>
-                                                <Button className="justify-content-center border-0 m-2" type="submit" style={{ backgroundColor: "#504A6D" }} active >
-                                                    Add your order
-                                                </Button>
-                                                {/* <ButtonGroup>
-                                                <Button className="justify-content-center border-0 m-2" style={{ backgroundColor: "#504A6D" }} onClick={() => handleDecrement(i)} active>
-                                                    <BsFillBagDashFill color="#eaded2" size={30} />
-                                                </Button>
-                                                <Button className="justify-content-center border-0 m-2" style={{ backgroundColor: "#504A6D" }} onClick={() => handleIncrement(i)} active>
-                                                    <BsFillBagPlusFill color="#eaded2" size={30} />
-                                                </Button>
-                                            </ButtonGroup> */}
-                                            </Form.Group>
-                                        </Form>
-                                        {/* <CookieCounter price={item.price} /> */}
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -130,14 +149,24 @@ export default function LoggedInMenu() {
                 );
             })}
 
-            <Row className="justify-content-md-center">
-                <Col className="col-2 pb-5">
-                    <Button className="border-0 m-2" style={{ backgroundColor: "#504A6D" }} onClick={cart} active>
+            <Form onSubmit={onSubmitOrder}>
+                <Form.Label>Order Name</Form.Label>
+                <Form.Control onChange={handleOnChange} name="orderName"  value={orderNameData} type="string" placeholder="Enter a name for your order" active>
+                </Form.Control>
+                {cookieData.map((item) => {
+                    return (
+                        <Form.Group>
+                            <Form.Label> {item.name} </Form.Label>
+                            <Form.Control onChange={handleOnChange} name={item._id} type="number" placeholder="0" active>
+                                </Form.Control> 
+                        </Form.Group>
+                    )
+                })}
+                <Button className="border-0 m-2" type="submit" style={{ backgroundColor: "#504A6D" }} active>
                         Submit your order
                         <FaShoppingCart color="#eaded2" size={30} />
-                    </Button>
-                </Col>
-            </Row>
+                </Button>
+            </Form>
         </Container >
 
 
