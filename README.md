@@ -44,7 +44,7 @@ If developing:
 
 ## Usage
 
-
+Using the command line the user should first run an "npm i" to download all dependencies for this application.  To start the application the user should run "npm start" to initiate the PORT listener.  To check the accuracy of the routes and information now stored in mongoDB use insomnia to enter http://localhost:3001/api/ and test out the get, post, put, and delete controllers and routes for all information.  
 
 ## Technologies Used
 
@@ -55,6 +55,7 @@ If developing:
 - Mongoose
 - Heroku
 - React Bootstrap
+- React icons
 - EamailJS
 
 ## Models and Relationships
