@@ -29,6 +29,16 @@ export const createOrder = (token, orderData) => {
     });
 };
 
+export const getOneOrder = (token, orderId ) => {
+    return fetch( `/api/orders/${orderId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        }
+    });
+}
+
 export const updateOrder = (token, orderId, orderData) => {
     return fetch( `/api/orders/${orderId}`, {
         method: 'PUT',
