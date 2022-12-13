@@ -110,11 +110,10 @@ export default function Dashboard() {
     document.location.href = '/cater';
   }
 
-  const handleEditOrder = (event) => {
-    console.log('in handleEditOrder');
-    const orderId = event.target.getAttribute("datad");
-    console.log("Dashboard orderId = " + orderId);
-    //document.location.href = `/viewOrder/${orderId}`;
+  const handleEditOrder = (order) => {
+    console.log('in handleEditOrder: order =' + JSON.stringify(order));
+    const orderId = order.order._id;
+    document.location.href = `/viewOrder/${orderId}`;
   }
 
   return (
@@ -152,7 +151,7 @@ export default function Dashboard() {
                     <Card.Text>
                       Delivery Date: {order.deliveryDate}
                     </Card.Text>
-                    <Button variant='secondary m-2' dataid={order._id} onClick={handleEditOrder} active>
+                    <Button variant='secondary m-2'  onClick={handleEditOrder} data-id={order._id} active>
                       <FaEdit color="#eaded2" size={25} />
                     </Button>
                     <Button variant='secondary m-2' active>
