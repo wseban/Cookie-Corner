@@ -7,10 +7,10 @@ module.exports = {
             const orderData = await Order.find({});
             if(!orderData) {
                 console.log('did not get orderData');
-                res.status(400).json({message: 'orders not found'});
+                return res.status(400).json({message: 'orders not found'});
             } else {
                 console.log('orderData');
-                res.json(orderData);
+                return res.json(orderData);
             }
         } catch(err) {
             console.log(err);
@@ -66,14 +66,14 @@ module.exports = {
                 { _id: req.params.orderId }
                 );
             if (!orderData) {
-            res.status(404).json({ message: 'No order found' })
+                return res.status(404).json({ message: 'No order found' });
             } else {
                 const userData = await User.findOneAndUpdate(
                     { _id: req.user._id },
                     { $pull: { orders: orderData._id } },
                     { new: true, runValidators: true }
                 );
-                res.json(orderData);
+                return res.json(orderData);
             }
         } catch(err) {
             res.status(500).json(err)
