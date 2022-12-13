@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 // import LoggedInMenu from "./pages/LoggedInMenu";
 import SignOut from "./SignOut";
 import OrderForm from "./pages/OrderForm";
+import Order from "./pages/Order";
 
 
 export default function Content() {
@@ -24,6 +25,7 @@ export default function Content() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/orderForm" element={<OrderForm />} />
         <Route path="/signout" element={<SignOut />} />
+        <Route path="/viewOrder/:orderId" element={<Order />} />
       </Routes>
       <div className="body"></div>
       <Footer />

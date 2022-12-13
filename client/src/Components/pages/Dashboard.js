@@ -5,6 +5,7 @@ import AuthService from '../../utils/auth';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 
+/*
 const testOrders = [
     { 
       orderName: 'Birthday party',
@@ -33,6 +34,7 @@ const testOrders = [
       ]
     },
 ];
+*/
 
 export default function Dashboard() {
   const [userName, setUserName] = useState('');
@@ -86,7 +88,7 @@ export default function Dashboard() {
         setUserName(userData.fullName);
         setOrders(userData.orders);
         console.log('name' + userData.fullName);
-        console.log('orders = ' + userData.orders);
+        console.log('orders = ' + JSON.stringify(userData.orders));
       }
     }
 
@@ -106,6 +108,12 @@ export default function Dashboard() {
   const requestCatering = () => {
     console.log('in requestCatering');
     document.location.href = '/cater';
+  }
+
+  const handleEditOrder = (order) => {
+    console.log('in handleEditOrder: order =' + JSON.stringify(order));
+    const orderId = order.order._id;
+    document.location.href = `/viewOrder/${orderId}`;
   }
 
   return (
@@ -130,7 +138,7 @@ export default function Dashboard() {
           {orders.length? `Your orders`: `You have no orders at present`}
           </h4>
 
-      {testOrders.map((order) => {
+      {orders.map((order) => {
         return (
           <Container className='mb-30 col-8'>
             <Row>
@@ -138,12 +146,12 @@ export default function Dashboard() {
                 <Card className='m-1'>
                   <Card.Body>
                     <Card.Title>
-                      Order name: {order.orderName}
+                      Order name: {order.orderName} OrderId: {order._id}
                     </Card.Title>
                     <Card.Text>
                       Delivery Date: {order.deliveryDate}
                     </Card.Text>
-                    <Button variant='secondary m-2' active>
+                    <Button variant='secondary m-2'  onClick={() => handleEditOrder({order})} active>
                       <FaEdit color="#eaded2" size={25} />
                     </Button>
                     <Button variant='secondary m-2' active>

@@ -30,7 +30,7 @@ export const createOrder = (token, orderData) => {
 };
 
 export const getOneOrder = (token, orderId ) => {
-    return fetch( `/api/orders/${orderId}`, {
+    return fetch( `/api/order/${orderId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const getOneOrder = (token, orderId ) => {
 }
 
 export const updateOrder = (token, orderId, orderData) => {
-    return fetch( `/api/orders/${orderId}`, {
+    return fetch( `/api/order/${orderId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -91,4 +91,14 @@ export const getMyInfo = (token) => {
     });
 }
 
-
+/* Quantity routes */
+export const updateQuantity = (token, quantityId, quantityData) => {
+    return fetch( `/api/quantity/${quantityId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(quantityData)
+    });
+}
