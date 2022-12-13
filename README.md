@@ -17,8 +17,9 @@ We wanted to create dynamic and easy to use webpage for small business accessibi
 ### Features
 
 - View the menu of cookies.
-- Login and create a user with ability to create an order.
+- Login and create a user with the ability to create an order.
 - Be able to add as many cookies as you want to your order.
+- Be able to update/delete orders as desired.
 - Be able to request a catering for your work or child's birthday party.
 
 ## Table of Contents
@@ -34,7 +35,7 @@ We wanted to create dynamic and easy to use webpage for small business accessibi
 - [License](#license)
 
 ## Installation
-If using the active link, no install required.
+If using the active link, no installation required.
 If developing:
 - Create a new repository on your GitHub account.
 - Clone this repository.
