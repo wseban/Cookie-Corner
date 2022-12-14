@@ -4,6 +4,7 @@ import { getMyInfo } from '../../utils/api';
 import AuthService from '../../utils/auth';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
+// import Swal from 'sweetalert2';
 
 /*
 const testOrders = [
@@ -89,6 +90,23 @@ export default function Dashboard() {
         setOrders(userData.orders);
         console.log('name' + userData.fullName);
         console.log('orders = ' + JSON.stringify(userData.orders));
+        // const Toast = Swal.mixin({
+        //   toast: true,
+        //   position: 'top-end',
+        //   showConfirmButton: false,
+        //   timer: 3000,
+        //   timerProgressBar: true,
+        //   didOpen: (toast) => {
+        //     toast.addEventListener('mouseenter', Swal.stopTimer)
+        //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+        //   }
+        // })
+        
+        // Toast.fire({
+        //   icon: 'success',
+        //   title: 'Signed in successfully'
+        // })
+        
       }
     }
 

@@ -5,6 +5,7 @@ import { validateEmail } from '../../utils/auth';
 import emailjs from '@emailjs/browser';
 import Modal from 'react-bootstrap/Modal';
 import AuthService from '../../utils/auth';
+import Swal from 'sweetalert2';
 
 export default function Contact() {
 
@@ -25,31 +26,41 @@ export default function Contact() {
     e.preventDefault();
 
     /* if user is logged in, get name and email from token */
-    if(AuthService.isLoggedIn()) {
+    if (AuthService.isLoggedIn() && formState.message) {
       const userData = AuthService.getUserFromToken();
       formState.name = userData.data.fullName;
       formState.email = userData.data.email;
+      Swal.fire({
+        icon: 'success',
+        text: `Thank you ${formState.name} for your request!  Our team will reach back out shortly`,
+      }
+      )
+      emailjs.send('service_9nf8itl', 'template_858brqf', { formState }, 'C8S5M9CyzbHsWjtS2')
+        .then(function (response) {
+          console.log('SUCCESS!', response.status, response.text);
+        }, function (error) {
+          console.log('FAILED...', error);
+        });
+      setFormState({ email: "", name: "", message: "" })
+
     } else {
       console.log(formState.email)
       console.log(validateEmail(formState.email))
       if (!validateEmail(formState.email) || !formState.message || !formState.name) {
-        return handleShow()
+        Swal.fire({
+          icon: 'error',
+          text: `You must have a message to send this form`,
+        }
+        )
       }
     }
 
     console.log(formState)
-    emailjs.send('service_9nf8itl', 'template_858brqf', {formState}, 'C8S5M9CyzbHsWjtS2')
-      .then(function (response) {
-        console.log('SUCCESS!', response.status, response.text);
-      }, function (error) {
-        console.log('FAILED...', error);
-      });
-    setFormState({ email: "", name: "", message: "" })
 
   };
 
   /* if user is not logged in, collect the name, and email */
-  if(!AuthService.isLoggedIn()) {
+  if (!AuthService.isLoggedIn()) {
     return (
       <div style={{ maxWidth: "1000px", margin: "0 auto", height: '75vh' }}>
         <h3 className='p-4 text-center'>Catering Request</h3>
@@ -100,21 +111,21 @@ export default function Contact() {
   } else {
     return (
       <div className='p-5' style={{ maxWidth: "1000px", margin: "0 auto", height: '75vh' }}>
-      <h3 className='p-4 text-center'>Catering Request</h3>
-      <Form>
-      <Form.Group controlId="formBasicMessage">
-      <Form.Label>Please send us a message with your requirements and the date for your event, and we'll be in touch with you shortly. </Form.Label>
-      <Form.Control
-          value={formState.message}
-          name="message"
-          onChange={handleInputChange}
-          as="textarea"
-          aria-label="With textarea" />
-      </Form.Group>
-      <Button variant="primary mt-2" onClick={handleFormSubmit} type="submit">
-        Submit
-      </Button>
-      </Form>
+        <h3 className='p-4 text-center'>Catering Request</h3>
+        <Form>
+          <Form.Group controlId="formBasicMessage">
+            <Form.Label>Please send us a message with your requirements and the date for your event, and we'll be in touch with you shortly. </Form.Label>
+            <Form.Control
+              value={formState.message}
+              name="message"
+              onChange={handleInputChange}
+              as="textarea"
+              aria-label="With textarea" />
+          </Form.Group>
+          <Button variant="primary mt-2" onClick={handleFormSubmit} type="submit">
+            Submit
+          </Button>
+        </Form>
       </div>
     );
   }
