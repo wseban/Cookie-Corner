@@ -18,16 +18,24 @@ const orderSchema = new Schema(
         },
         food: [
             {
-                type: Schema.Types.ObjectId,
-                ref: "food",
+                foodId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "food",
+                },
+                quantity: {
+                    type: Number
+                }
             },
+            
         ],
+/*        
         quantity: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "quantity",
             },
         ],
+        */
     },
     {
         toJSON: {

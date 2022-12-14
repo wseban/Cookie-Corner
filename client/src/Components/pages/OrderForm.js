@@ -78,7 +78,7 @@ export default function OrderForm() {
 
         const orderData = {
             orderName: orderNameData,
-            quantity: orderFormData
+            food: orderFormData
         };
 
         console.log("ORDERDATA="+JSON.stringify(orderData));
