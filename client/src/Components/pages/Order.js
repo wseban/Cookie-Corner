@@ -16,6 +16,7 @@ export default function Order() {
     const [updateOrderFoods, setUpdateOrderFoods] = useState([]);
     //const [updateOrderDelivery, setUpdateOrderDelivery] = useState()
 
+    
     useEffect(() => {
 
         const getOrderInfo = async () => {
@@ -55,9 +56,9 @@ export default function Order() {
         getOrderInfo();
     }, [orderId, token]);
 
-    if (initOrderFoods.length<1) {
+    if (initOrderFoods.length < 1) {
         return <h2 className='p-4 text-center'>Loading...</h2>;
-      }
+    }
 
     //const foodArr = JSON.parse(JSON.stringify(initOrderFoods));
     //console.log(`foooodarrrrr${JSON.stringify(foodArr)}`)
@@ -116,27 +117,13 @@ export default function Order() {
         console.log(`arrDaratosendtoDb ${JSON.stringify(updateData)}`)
 
         try {
-            //if (updateData.orderName) {
-                const response = await updateOrder(token, orderId, updateData);
 
-                if (!response.ok) {
-                    throw new Error(response.message);
-                }
-            //}
+            const response = await updateOrder(token, orderId, updateData);
 
+            if (!response.ok) {
+                throw new Error(response.message);
+            }
 
-            // for (let i = 0; i < updateData.food.length; i++) {
-            //     const quantityId = updateData.food[i]._id;
-            //     const updateQuantityData = { quantity: `${updateData.food[i].quantity}` };
-            //     // console.log(`quantityId ${JSON.stringify(quantityId)}`)
-            //     // console.log(`quantitydata ${JSON.stringify(updateQuantityData)}`)
-            //     const response = await updateQuantity(token, quantityId, updateQuantityData);
-
-            //     if (!response.ok) {
-            //         throw new Error(response.message);
-            //     }
-            // }
-            //console.log(`submitted data ${JSON.stringify(updateOrderFoods)}`);
 
         } catch (err) {
             alert(err);
@@ -147,7 +134,7 @@ export default function Order() {
 
 
     return (
-        <Container style={{ color: "#504A6D" }} fluid>
+        <Container style={{ color: "#504A6D" }} className="mb-30 col-9 p-3" fluid>
             <Form
                 onSubmit={handleUpdateForm}
             >
@@ -182,13 +169,14 @@ export default function Order() {
                     ?
                     updateOrderFoods.map((food, i) => (
                         <>
-                            <Row style={{ fontSize: "150%" }}>
+                            <Row style={{ fontSize: "150%" }} className="mb-3">
                                 <Col xs={6}>
                                     {food.foodId.name}
                                 </Col>
                                 <Col xs={3} className="text-center">
                                     <FormGroup className='' id='name'>
-                                        <FormControl type='string'
+                                        <FormControl type='number'
+                                            min='0'
                                             name='quantity'
                                             index={i}
                                             placeholder={food.quantity ? food.quantity : 0}
@@ -208,32 +196,11 @@ export default function Order() {
                     :
                     initOrderFoods.map((food, i) => (
                         <>
-                            {/* <Row style={{ fontSize: "150%" }}>
-                                <Col xs={6}>
-                                    {food.foodId.name}
-                                </Col>
-                                <Col xs={3} className="text-center">
-                                    <FormGroup className='' id='name'>
-                                        <FormControl type='string'
-                                            name='quantity'
-                                            index={i}
-                                            placeholder={food.quantity ? food.quantity : 0}
-                                            onChange={handleOnChange}
-                                        >
-                                        </FormControl>
-                                    </FormGroup>
-                                </Col>
-
-                                <Col xs={3} className="text-center">
-                                    ${food.foodId.price*food.quantity}
-                                </Col>
-
-                            </Row> */}
                         </>
                     ))
                 }
 
-                <Row style={{ fontSize: "175%", borderBottom: "solid 5px #ff69b4" }}>
+                <Row style={{ fontSize: "175%", borderBottom: "solid 5px #ff69b4" }} className="mb-3">
                     <Col xs={6}></Col>
                     <Col xs={3} className="text-center">
                         Total Price
@@ -246,7 +213,7 @@ export default function Order() {
                 <Row style={{ fontSize: "175%" }}>
                     <Col xs={9}></Col>
                     <Col xs={3} className="text-center">
-                        <Button className='mt-2' type='submit' size="lg" style={{ fontSize: "110%", backgroundColor: "#504A6D", color: "#eaded2", border: "none" }}>
+                        <Button variant='secondary' className='mt-2' type='submit' size="lg" style={{ fontSize: "110%", color: "#eaded2", border: "none" }}>
                             Update Order
                         </Button>
                     </Col>
