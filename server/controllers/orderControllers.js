@@ -99,7 +99,7 @@ module.exports = {
         Order.findOne({ _id: req.params.orderId })
             .select('-__v')
             .populate({ 
-                path: 'quantity',
+                path: 'food',
                 populate: {
                   path: 'foodId',
                   model: 'food'

@@ -62,18 +62,16 @@ export default function OrderForm() {
 
         if (name === 'orderName') {
             setOrderNameData(value);
-          } else {
-          setOrderFormData({ ...orderFormData, [name]: value });
-          } 
-          
-          
+        } else {
+            setOrderFormData({ ...orderFormData, [name]: value });
+        }
         console.log("!!!!!!!dglskjglksjgsdkl");
     }
 
     function onSubmitOrder(event) {
         event.preventDefault();
 
-        console.log("orderName= "+ orderNameData);
+        console.log("orderName= " + orderNameData);
         console.log("orderFormData" + JSON.stringify(orderFormData));
 
         const orderData = {
@@ -81,45 +79,63 @@ export default function OrderForm() {
             food: orderFormData
         };
 
-        console.log("ORDERDATA="+JSON.stringify(orderData));
+        console.log("ORDERDATA=" + JSON.stringify(orderData));
 
         sendNewOrder(orderData);
 
- }
+    }
 
     const sendNewOrder = async (orderData) => {
-        if(!AuthService.isLoggedIn) {
+        if (!AuthService.isLoggedIn) {
             console.log('How did we get there with no one logged in?');
             return;
-          } 
-    
-          console.log('isLoggedIn');
-          const token = AuthService.getToken();
-          if(!token) {
+        }
+
+        console.log('isLoggedIn');
+        const token = AuthService.getToken();
+        if (!token) {
             return;
-          }
-    
-          console.log('got token');
-    
-          /* token exists, check if expired */
-          if(AuthService.checkTokenExpired(token)) {
+        }
+
+        console.log('got token');
+
+        /* token exists, check if expired */
+        if (AuthService.checkTokenExpired(token)) {
             return;
-          } 
-    
-          console.log('token has not expired');
-    
-          /* use the api - to creating a new order */
-          const response = await createOrder(token, orderData);
-          if (!response.ok) {
+        }
+
+        console.log('token has not expired');
+
+        //for(let i=0; i<cookieData._id)
+        console.log("COOOKKKKIIIESSSS= " + JSON.stringify(cookieData));
+
+        const foodArr = []
+        for (let i = 0; i < cookieData.length; i++) {
+            if (cookieData[i]._id in orderData.food) {
+                console.log(`id matches in db${cookieData[i]._id}`)
+                const itemId = cookieData[i]._id;
+                const item = { "foodId": cookieData[i]._id, "quantity": orderData.food[itemId] }
+                console.log(`iittteeeemmmm food: ${JSON.stringify(item)}`)
+                foodArr.push(item)
+            }
+        }
+
+        orderData.food = foodArr;
+        //console.log("New order data= " + JSON.stringify(orderDataa));
+
+
+        /* use the api - to creating a new order */
+        const response = await createOrder(token, orderData);
+        if (!response.ok) {
             console.log(response.ok);
             return;
-          }
-    
-          console.log('getMyInfo returned');
-    
-          const newOrderData = await response.json();
-          console.log("New order= "+JSON.stringify(newOrderData));
-    
+        }
+
+        console.log('getMyInfo returned');
+
+        const newOrderData = await response.json();
+        console.log("New order= " + JSON.stringify(newOrderData));
+
     }
 
     return (
@@ -151,20 +167,20 @@ export default function OrderForm() {
 
             <Form onSubmit={onSubmitOrder}>
                 <Form.Label>Order Name</Form.Label>
-                <Form.Control onChange={handleOnChange} name="orderName"  value={orderNameData} type="string" placeholder="Enter a name for your order" active>
+                <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
                 </Form.Control>
                 {cookieData.map((item) => {
                     return (
                         <Form.Group>
                             <Form.Label> {item.name} </Form.Label>
                             <Form.Control onChange={handleOnChange} name={item._id} type="number" placeholder="0" active>
-                                </Form.Control> 
+                            </Form.Control>
                         </Form.Group>
                     )
                 })}
                 <Button className="border-0 m-2" type="submit" style={{ backgroundColor: "#504A6D" }} active>
-                        Submit your order
-                        <FaShoppingCart color="#eaded2" size={30} />
+                    Submit your order
+                    <FaShoppingCart color="#eaded2" size={30} />
                 </Button>
             </Form>
         </Container >
