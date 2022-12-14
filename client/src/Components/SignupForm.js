@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap';
 import { signupUser } from '../utils/api';
 import AuthService  from '../utils/auth';
+import Swal from 'sweetalert2';
 
 export default function SignupForm() {
   const [signupFormData, setSignupFormData] = useState({fullName: '', email: '', password: ''});
@@ -18,7 +19,22 @@ export default function SignupForm() {
     try {
       /* send request to server to sign up */
       const response = await signupUser(signupFormData);
-
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'Signed in successfully'
+      })
       if(!response.ok) {
         throw new Error(response.message);
       }
