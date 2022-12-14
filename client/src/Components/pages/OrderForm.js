@@ -138,52 +138,59 @@ export default function OrderForm() {
     }
 
     return (
-        <Container className="">
-            {cookieData.map((item, i) => {
-                return (
-                    <Container className="mb-30 col-9 p-3">
-                        <Row>
-                            <Col className="col-12">
-                                <Card className="m-1">
-                                    <Card.Body>
-                                        <Card.Title style={{ fontSize: "150%" }}>
-                                            {item.name}
-                                        </Card.Title>
-                                        <Card.Img className="mr-5" style={{ maxWidth: "250px" }} src={cookieImg[i]} />
-                                        <Card.Text style={{ fontSize: "125%" }}>
-                                        Price: <i>  $ {item.price} </i>
-                                        </Card.Text>
-                                        <Card.Text style={{ fontSize: "125%" }}>
-                                            Ingredients: {item.ingredients}
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Container>
-                );
-            })}
-
-            <Form className="col-6 pb-5" onSubmit={onSubmitOrder}>
-                <Form.Group className="col-6">
-                    <Form.Label> <b>Order Name</b></Form.Label>
-                    <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
-                    </Form.Control>
-                </Form.Group>
-                {cookieData.map((item) => {
-                    return (
-                        <Form.Group className="col-6 pt-1">
-                            <Form.Label> {item.name} </Form.Label>
-                            <Form.Control onChange={handleOnChange} name={item._id} type="number" min="0" placeholder="0" active>
+        <Container className="p-2" fluid>
+            <Row>
+                <Col className="col-6">
+                    {cookieData.map((item, i) => {
+                        return (
+                            <Container className="mb-30 col-8 p-3">
+                                <Row>
+                                    <Col className="col-12 pb-5">
+                                        <Card className="m-1">
+                                            <Card.Body>
+                                                <Card.Title style={{ fontSize: "150%" }}>
+                                                    {item.name}
+                                                </Card.Title>
+                                                <Card.Img className="mr-5" style={{ maxWidth: "250px" }} src={cookieImg[i]} />
+                                                <Card.Text style={{ fontSize: "125%" }}>
+                                                    Price: <i>  $ {item.price} </i>
+                                                </Card.Text>
+                                                <Card.Text style={{ fontSize: "125%" }}>
+                                                    Ingredients: {item.ingredients}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        );
+                    })}
+                </Col>
+                <Col className="col-6">
+                <Container className="col-8" >
+                    <Form className="p-3 m-3" onSubmit={onSubmitOrder}>
+                        <Form.Group className="col-6">
+                            <Form.Label style={{ fontSize: "125%"}}> <b>Order Name</b></Form.Label>
+                            <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
                             </Form.Control>
                         </Form.Group>
-                    )
-                })}
-                <Button variant="secondary" className="m-2 pb-3" type="submit" active>
-                    Submit your order
-                    <FaShoppingCart color="#eaded2" size={30} />
-                </Button>
-            </Form>
+                        {cookieData.map((item) => {
+                            return (
+                                <Form.Group className="col-6 pt-1">
+                                    <Form.Label style={{ fontSize: "125%"}} > {item.name} </Form.Label>
+                                    <Form.Control style={{ fontSize: "125%"}} onChange={handleOnChange} name={item._id} type="number" min="0" placeholder="0" active>
+                                    </Form.Control>
+                                </Form.Group>
+                            )
+                        })}
+                        <Button style={{ fontSize: "125%"}} variant="secondary" className="mt-3 col-6" type="submit" active>
+                            Submit your order
+                            <FaShoppingCart className="m-2" color="#eaded2" size={30} />
+                        </Button>
+                    </Form>
+                </Container >
+                </Col>
+            </Row>
         </Container >
     )
 }
