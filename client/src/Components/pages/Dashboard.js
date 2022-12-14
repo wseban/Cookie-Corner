@@ -5,44 +5,12 @@ import AuthService from '../../utils/auth';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 
-/*
-const testOrders = [
-    { 
-      orderName: 'Birthday party',
-      deliveryDate: '12/15/2022',
-      food: [
-        {
-          name: "Brown Chocolate Chip Cookie",
-          price: 7.5,
-          ingredients: "Browned butter, Egg, Brown sugar, Baking soda, Vanilla",
-          picture: "../assets/BrownChocolateChipCookie.png" 
-  
-      },
-      ]
-    },
-    { 
-      orderName: 'Training session - Day 1 breakfast',
-      deliveryDate: '12/15/2022',
-      food: [
-        {
-          name: "Brown Chocolate Chip Cookie",
-          price: 7.5,
-          ingredients: "Browned butter, Egg, Brown sugar, Baking soda, Vanilla",
-          picture: "../assets/BrownChocolateChipCookie.png" 
-  
-      },
-      ]
-    },
-];
-*/
-
 export default function Dashboard() {
   const [userName, setUserName] = useState('');
   const [orders, setOrders] = useState([]);
 
   const [userData, setUserData] = useState({});
   const userDataLength = Object.keys(userData).length;
-  console.log("userDataLength 1: " + userDataLength);
 
   useEffect(() => {
     const getMyOrders = async () => {
@@ -50,7 +18,6 @@ export default function Dashboard() {
       /* get my token */
       if(!AuthService.isLoggedIn) {
         console.log('How did we get there with no one logged in?');
-        /* TBD: goto Home */
         return;
       } 
 
@@ -60,14 +27,10 @@ export default function Dashboard() {
         return;
       }
 
-      console.log('got token');
-
       /* token exists, check if expired */
       if(AuthService.checkTokenExpired(token)) {
         return;
       } 
-
-      console.log('token has not expired');
 
       /* use the api - to fetch the orders the user that's logged in */
       const response = await getMyInfo(token);
@@ -80,10 +43,7 @@ export default function Dashboard() {
 
       const userData = await response.json();
 
-      console.log('userData' + userData);
-
       if(userData) {
-
         setUserData(userData);
         setUserName(userData.fullName);
         setOrders(userData.orders);
@@ -94,11 +54,6 @@ export default function Dashboard() {
 
     getMyOrders();
   }, [userDataLength]);
-
-  if (!userDataLength) {
-    return <h2 className='p-4 text-center'>Loading...</h2>;
-  }
-  console.log("userDataLength 2: " + userDataLength);
 
   const placeNewOrder = () => {
     console.log('in placeNewOrder');
@@ -132,14 +87,10 @@ export default function Dashboard() {
       return;
     }
 
-    console.log('got token');
-
     /* token exists, check if expired */
     if(AuthService.checkTokenExpired(token)) {
       return;
     } 
-
-    console.log('token has not expired');
 
     /* use the api - to fetch the orders the user that's logged in */
     const response = await deleteOrder(token, orderId);
@@ -161,18 +112,16 @@ export default function Dashboard() {
           <h3 className='p-4 text-center'>Your Cookie Corner</h3>
           <h4 className='p-1 text-center'> {userName} </h4>
 
-          <Row className="justify-content-md-center">
-            <Col className="col-4 p-2 mt-5">
-              <ButtonGroup size="lg">
-                <Button variant='secondary m-1 justify-content-md-center' onClick={placeNewOrder} active>
+            <div className='text-center'>
+            <ButtonGroup size="lg" >
+                <Button variant='secondary m-1' onClick={placeNewOrder} active>
                   Place new order
                 </Button> 
-                <Button variant='secondary m-1 justify-content-md-center' onClick={requestCatering} active>
+                <Button variant='secondary m-1' onClick={requestCatering} active>
                   Cater an event
                 </Button>
               </ButtonGroup>
-            </Col>
-          </Row>
+            </div>
 
           <h4 className='text-center p-3'>
           {orders.length? `Your orders`: `You have no orders at present`}

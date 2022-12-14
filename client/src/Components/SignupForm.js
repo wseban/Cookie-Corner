@@ -28,6 +28,7 @@ export default function SignupForm() {
       if(token) {
         console.log(user);
         AuthService.saveToken(token);
+        document.location.href = '/dashboard';
       } else {
         console.log('No token returned');
       }
@@ -35,8 +36,6 @@ export default function SignupForm() {
       alert(err);
     }
     setSignupFormData({fullName: '', email: '', password: ''});
-    document.location.href = '/dashboard';
-
   }
   return (
     <div className='border border-secondary rounded bg-light'>
