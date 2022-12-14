@@ -10,7 +10,7 @@ function Header() {
     /* is user is logged in, show Home, Menu, Sign out, Cater */
     if(!AuthService.isLoggedIn()){
       return (
-        <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
+        <ul className="nav border" style={{marginRight: "10px"}}>
           <li className="nav-item m-2" style={{fontSize: "36px"}}>
             <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
           </li>
@@ -27,7 +27,7 @@ function Header() {
       );
     } else {
       return (
-        <ul className="nav border ms-auto" style={{marginRight: "10px"}}>
+        <ul className="nav border" style={{marginRight: "10px"}}>
           <li className="nav-item m-2" style={{fontSize: "36px"}}>
             <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
           </li>
@@ -47,7 +47,7 @@ function Header() {
   return (
     <header className='hstack gap-3' style={{backgroundColor: "#504A6D", height: "15vh", display: "flex", flexWrap: "wrap" }}>
     <h1  style={{color:"#eaded2", paddingLeft: "10px"}}>Cookie Monster's Cookie Corner</h1>
-    <nav className="ml-50">
+    <nav className="ms-auto">
       {showNavBar()}
     </nav>
     </header>
