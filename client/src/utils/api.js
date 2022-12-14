@@ -51,7 +51,7 @@ export const updateOrder = (token, orderId, orderData) => {
 }
 
 export const deleteOrder = (token, orderId ) => {
-    return fetch( `/api/orders/${orderId}`, {
+    return fetch( `/api/order/${orderId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

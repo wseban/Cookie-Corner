@@ -34,6 +34,7 @@ export default function LoggedInMenu() {
     //         setCount(count[i] - 1);
     //     }
     // };
+    
 
 
 
@@ -62,7 +63,9 @@ export default function LoggedInMenu() {
 
         getAllCookies();
     }, []);
-
+    if (!cookieData.length) {
+        return <h2 className='p-4 text-center'>Loading...</h2>;
+      }
     function getImportName(picturePath) {
         const arr = picturePath.split('/');
         const importName = arr[2].split('.');
