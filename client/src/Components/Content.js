@@ -7,7 +7,6 @@ import Cater from './pages/Cater';
 import Footer from "./Footer";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
-// import LoggedInMenu from "./pages/LoggedInMenu";
 import SignOut from "./SignOut";
 import OrderForm from "./pages/OrderForm";
 import Order from "./pages/Order";

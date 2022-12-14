@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CookieCounter from "./CookieCounter";
 import { Container, Row, Col, Card, Button, ButtonGroup, Form, FormGroup } from "react-bootstrap";
 import { getAllFoods, createOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
@@ -82,6 +81,7 @@ export default function OrderForm() {
         console.log("ORDERDATA=" + JSON.stringify(orderData));
 
         sendNewOrder(orderData);
+        document.location.href = '/dashboard';
 
     }
 
@@ -139,22 +139,22 @@ export default function OrderForm() {
     }
 
     return (
-        <Container className="pb-5">
+        <Container className="">
             {cookieData.map((item, i) => {
                 return (
                     <Container className="mb-30 col-9 p-3">
                         <Row>
                             <Col className="col-12">
-                                <Card style={{ backgroundColor: "#DBBDC7" }} className="m-1">
+                                <Card className="m-1">
                                     <Card.Body>
-                                        <Card.Title style={{ fontSize: "150%", color: "#504A6D" }}>
+                                        <Card.Title style={{ fontSize: "150%" }}>
                                             {item.name}
                                         </Card.Title>
                                         <Card.Img className="mr-5" style={{ maxWidth: "250px" }} src={cookieImg[i]} />
-                                        <Card.Text style={{ fontSize: "125%", color: "#504A6D" }}>
-                                            Price: $ {item.price}
+                                        <Card.Text style={{ fontSize: "125%" }}>
+                                        Price: <i>  $ {item.price} </i>
                                         </Card.Text>
-                                        <Card.Text style={{ fontSize: "125%", color: "#504A6D" }}>
+                                        <Card.Text style={{ fontSize: "125%" }}>
                                             Ingredients: {item.ingredients}
                                         </Card.Text>
                                     </Card.Body>
@@ -165,26 +165,26 @@ export default function OrderForm() {
                 );
             })}
 
-            <Form onSubmit={onSubmitOrder}>
-                <Form.Label>Order Name</Form.Label>
-                <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
-                </Form.Control>
+            <Form className="col-6 pb-5" onSubmit={onSubmitOrder}>
+                <Form.Group className="col-6">
+                    <Form.Label> <b>Order Name</b></Form.Label>
+                    <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
+                    </Form.Control>
+                </Form.Group>
                 {cookieData.map((item) => {
                     return (
-                        <Form.Group>
+                        <Form.Group className="col-6 pt-1">
                             <Form.Label> {item.name} </Form.Label>
-                            <Form.Control onChange={handleOnChange} name={item._id} type="number" placeholder="0" active>
+                            <Form.Control onChange={handleOnChange} name={item._id} type="number" min="0" placeholder="0" active>
                             </Form.Control>
                         </Form.Group>
                     )
                 })}
-                <Button className="border-0 m-2" type="submit" style={{ backgroundColor: "#504A6D" }} active>
+                <Button variant="secondary" className="m-2 pb-3" type="submit" active>
                     Submit your order
                     <FaShoppingCart color="#eaded2" size={30} />
                 </Button>
             </Form>
         </Container >
-
-
     )
 }
