@@ -94,7 +94,7 @@ export default function Contact() {
               as="textarea"
               aria-label="With textarea" />
           </Form.Group>
-          <Button variant="primary mt-2" onClick={handleFormSubmit} type="submit">
+          <Button variant="secondary mt-2" onClick={handleFormSubmit} type="submit">
             Submit
           </Button>
         </Form>
