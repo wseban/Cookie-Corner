@@ -9,7 +9,7 @@ export default function Order() {
     const [initOrderFoods, setinitOrderFoods] = useState([]);
     //const [orderDelivery, setDelivery] = useState();
     let { orderId } = useParams();
-    const [sum, setSum] = useState(0);
+    const [calcSum, setSum] = useState(0);
     const token = AuthService.getToken();
 
     const [updateOrderName, setUpdateOrderName] = useState();
@@ -40,7 +40,7 @@ export default function Order() {
                     console.log(`setupdateorderinitial${JSON.stringify(foodArr)}`);
                 }
 
-                const priceData = await (orderDataRes.orderData.food.map(food => food.foodId.price * food.foodId.price));
+                const priceData = await (orderDataRes.orderData.food.map(food => food.quantity * food.foodId.price));
                 console.log(`ppprrriiiccceee data ${(priceData)}`);
 
                 let calcSum = 0;
@@ -187,7 +187,7 @@ export default function Order() {
                                 </Col>
 
                                 <Col xs={3} className="text-center">
-                                    ${food.foodId.price * food.quantity}
+                                    ${calcSum}
                                 </Col>
 
                             </Row>
@@ -206,7 +206,7 @@ export default function Order() {
                         Total Price
                     </Col>
                     <Col xs={3} className="text-center">
-                        ${sum}
+                        ${calcSum}
                     </Col>
                 </Row>
 

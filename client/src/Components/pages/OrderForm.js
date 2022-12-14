@@ -8,7 +8,6 @@ import ChocolateCookie from "../assets/ChocolateCookie.png";
 import PeanutButterCookie from "../assets/PeanutButterCookie.png";
 import WalnutCookie from "../assets/WalnutCookie.png";
 import { FaShoppingCart } from "react-icons/fa";
-import { BsFillBagDashFill, BsFillBagPlusFill } from "react-icons/bs";
 
 export default function OrderForm() {
 
