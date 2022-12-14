@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row, Button, Card, ButtonGroup} from 'react-bootstrap';
-import { getMyInfo } from '../../utils/api';
+import { getMyInfo, deleteOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
@@ -116,6 +116,46 @@ export default function Dashboard() {
     document.location.href = `/viewOrder/${orderId}`;
   }
 
+  const handleDeleteOrder = async (order) => {
+    console.log('in handleDeleteOrder: order =' + JSON.stringify(order));
+    const orderId = order.order._id;
+
+    /* get my token */
+    if(!AuthService.isLoggedIn) {
+      console.log('How did we get there with no one logged in?');
+      return;
+    } 
+
+    console.log('isLoggedIn');
+    const token = AuthService.getToken();   
+    if(!token) {
+      return;
+    }
+
+    console.log('got token');
+
+    /* token exists, check if expired */
+    if(AuthService.checkTokenExpired(token)) {
+      return;
+    } 
+
+    console.log('token has not expired');
+
+    /* use the api - to fetch the orders the user that's logged in */
+    const response = await deleteOrder(token, orderId);
+    if (!response.ok) {
+      console.log(response.ok);
+      return;
+    }
+
+    console.log('deleteOrder returned');
+
+    const userData = await response.json();
+
+    console.log('userData' + userData);
+
+  }
+
   return (
     <Container className='mb-30' fluid>
           <h3 className='p-4 text-center'>Your Cookie Corner</h3>
@@ -154,7 +194,7 @@ export default function Dashboard() {
                     <Button variant='secondary m-2'  onClick={() => handleEditOrder({order})} active>
                       <FaEdit color="#eaded2" size={25} />
                     </Button>
-                    <Button variant='secondary m-2' active>
+                    <Button variant='secondary m-2' onClick={() => handleDeleteOrder({order})} active>
                       <FaTrashAlt color="#eaded2" size={25} />
                     </Button>
                   </Card.Body>
