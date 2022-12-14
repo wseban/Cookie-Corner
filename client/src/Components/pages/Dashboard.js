@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [userData, setUserData] = useState({});
   const userDataLength = Object.keys(userData).length;
 
+  
   useEffect(() => {
     const getMyOrders = async () => {
       console.log("in getMyOrders()");
@@ -49,6 +50,7 @@ export default function Dashboard() {
         setOrders(userData.orders);
         console.log('name' + userData.fullName);
         console.log('orders = ' + JSON.stringify(userData.orders));
+        
       }
     }
 
