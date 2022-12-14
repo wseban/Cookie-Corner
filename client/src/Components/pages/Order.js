@@ -187,7 +187,7 @@ export default function Order() {
                                 </Col>
 
                                 <Col xs={3} className="text-center">
-                                    ${calcSum}
+                                    ${food.quantity * food.foodId.price}
                                 </Col>
 
                             </Row>
