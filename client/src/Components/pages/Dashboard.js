@@ -15,14 +15,12 @@ export default function Dashboard() {
   
   useEffect(() => {
     const getMyOrders = async () => {
-      console.log("in getMyOrders()");
       /* get my token */
       if(!AuthService.isLoggedIn) {
         console.log('How did we get there with no one logged in?');
         return;
       } 
 
-      console.log('isLoggedIn');
       const token = AuthService.getToken();
       if(!token) {
         return;
@@ -40,17 +38,12 @@ export default function Dashboard() {
         return;
       }
 
-      console.log('getMyInfo returned');
-
       const userData = await response.json();
 
       if(userData) {
         setUserData(userData);
         setUserName(userData.fullName);
         setOrders(userData.orders);
-        console.log('name' + userData.fullName);
-        console.log('orders = ' + JSON.stringify(userData.orders));
-        
       }
     }
 
@@ -82,13 +75,10 @@ export default function Dashboard() {
       console.log('How did we get there with no one logged in?');
       return;
     } 
-
-    console.log('isLoggedIn');
     const token = AuthService.getToken();   
     if(!token) {
       return;
     }
-
     /* token exists, check if expired */
     if(AuthService.checkTokenExpired(token)) {
       return;
@@ -101,10 +91,7 @@ export default function Dashboard() {
       return;
     }
 
-    console.log('deleteOrder returned');
-
     const userData = await response.json();
-
     console.log('userData' + userData);
 
   }
@@ -137,7 +124,7 @@ export default function Dashboard() {
                 <Card className='m-1'>
                   <Card.Body>
                     <Card.Title>
-                      Order name: {order.orderName} OrderId: {order._id}
+                      Order name: {order.orderName}
                     </Card.Title>
                     <Card.Text>
                       Delivery Date: {order.deliveryDate}
