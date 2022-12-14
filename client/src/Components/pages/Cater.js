@@ -43,21 +43,24 @@ export default function Contact() {
         });
       setFormState({ email: "", name: "", message: "" })
 
-    } else {
+    } else if(!validateEmail(formState.email) || !formState.message || !formState.name){
       console.log(formState.email)
       console.log(validateEmail(formState.email))
-      if (!validateEmail(formState.email) || !formState.message || !formState.name) {
         Swal.fire({
           icon: 'error',
           text: `You must have a message to send this form`,
+        })} else{
+          emailjs.send('service_9nf8itl', 'template_858brqf', { formState }, 'C8S5M9CyzbHsWjtS2')
+          .then(function (response) {
+            console.log('SUCCESS!', response.status, response.text);
+          }, function (error) {
+            console.log('FAILED...', error);
+        });
+        setFormState({ email: "", name: "", message: "" })
         }
-        )
-      }
     }
 
     console.log(formState)
-
-  };
 
   /* if user is not logged in, collect the name, and email */
   if (!AuthService.isLoggedIn()) {
