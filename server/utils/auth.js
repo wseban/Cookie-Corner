@@ -6,7 +6,6 @@ module.exports = {
   /* generate the token with the data, secret and the expire time */
   /* https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs */
   signToken: function ({ _id, fullName, email}) {
-    console.log(`signToken: ${_id} ${fullName} ${email}`);
     const token = jwt.sign( 
       { data: {_id, fullName, email}},
       secret, 
