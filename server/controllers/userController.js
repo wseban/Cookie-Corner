@@ -4,9 +4,7 @@ const { signToken } = require('../utils/auth');
 module.exports = {
   /* create user on sign up - hash password */
   createUser: async (req, res) => {
-    console.log("in createUser");
     try {
-      console.log(req.body);
       const user = await User.create(req.body);
       if (user) { 
         /* generate JWT with the data from the user, and return to client */
@@ -23,7 +21,6 @@ module.exports = {
   },
 
   getUsers: async (req, res) => {
-    console.log("in getUsers");
     try {
       const users = await User.find({});
       users? res.json(users):
@@ -36,11 +33,8 @@ module.exports = {
 
   /* get a single user by id, with orders */
   getOneUser: async (req, res) => {
-    console.log("in getOneUser");
     try {
-      console.log("userId:" + req.params.userId);
       const user = await User.findOne({_id: req.params.userId}).populate('orders');
-      console.log("found user:" + user);
       user? res.json(user):
         res.status(500).json({message: 'Error finding user'});
       return;
@@ -51,11 +45,8 @@ module.exports = {
 
     /* get the currently logged in user (me), with orders */
     getMe: async (req, res) => {
-      console.log("in getMe");
       try {
-        console.log("user._id:" + req.user._id);
         const user = await User.findOne({_id: req.user._id}).populate('orders');
-        console.log("found user:" + user);
         user? res.json(user):
           res.status(500).json({message: 'Error finding user'});
         return;
@@ -66,7 +57,6 @@ module.exports = {
 
   /* login user - check password */
   loginUser: async (req, res) => {
-    console.log("in loginUser");
     try {
       const user = await User.findOne({ email: req.body.email});
       if(!user) {
@@ -89,7 +79,6 @@ module.exports = {
   },
   /* log the user out */
   logoutUser: async (req, res) => {
-    console.log("in logoutUser");
     res.json({message: 'logged out'});
   },
 };
