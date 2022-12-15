@@ -16,10 +16,7 @@ export default function Contact() {
   const handleShow = () => setShow(true);
 
   const handleInputChange = (e) => {
-    console.log(e.target.name)
-    console.log(e.target.value)
     setFormState({ ...formState, [e.target.name]: e.target.value });
-    console.log(formState)
 
   };
   const handleFormSubmit = (e) => {
@@ -44,8 +41,7 @@ export default function Contact() {
       setFormState({ email: "", name: "", message: "" })
 
     } else if(!validateEmail(formState.email) || !formState.message || !formState.name){
-      console.log(formState.email)
-      console.log(validateEmail(formState.email))
+      
         Swal.fire({
           icon: 'error',
           text: `You must have a message to send this form`,
@@ -59,8 +55,6 @@ export default function Contact() {
         setFormState({ email: "", name: "", message: "" })
         }
     }
-
-    console.log(formState)
 
   /* if user is not logged in, collect the name, and email */
   if (!AuthService.isLoggedIn()) {
