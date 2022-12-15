@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getOneOrder, updateOrder, updateQuantity } from '../../utils/api';
+import { getOneOrder, updateOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
 import { Button, Container, Row, Col, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
@@ -7,14 +7,12 @@ import { useParams } from 'react-router-dom';
 export default function Order() {
     const [initOrderName, setInitOrderName] = useState();
     const [initOrderFoods, setinitOrderFoods] = useState([]);
-    //const [orderDelivery, setDelivery] = useState();
     let { orderId } = useParams();
     const [calcSum, setSum] = useState(0);
     const token = AuthService.getToken();
 
     const [updateOrderName, setUpdateOrderName] = useState();
     const [updateOrderFoods, setUpdateOrderFoods] = useState([]);
-    //const [updateOrderDelivery, setUpdateOrderDelivery] = useState()
 
     
     useEffect(() => {
@@ -32,16 +30,11 @@ export default function Order() {
                 if (orderDataRes) {
                     setInitOrderName(orderDataRes.orderData.orderName);
                     setinitOrderFoods(orderDataRes.orderData.food);
-                    console.log(`orderdataaaa ${JSON.stringify(orderDataRes.orderData)}`);
-                    // console.log(`food order each${JSON.stringify(orderDataRes.orderData.quantity)}`);
                     const foodArr = JSON.parse(JSON.stringify(orderDataRes.orderData.food));
-                    //setDelivery(orderDataRes.orderData.deliveryDate);
                     setUpdateOrderFoods(foodArr);
-                    console.log(`setupdateorderinitial${JSON.stringify(foodArr)}`);
                 }
 
                 const priceData = await (orderDataRes.orderData.food.map(food => food.quantity * food.foodId.price));
-                console.log(`ppprrriiiccceee data ${(priceData)}`);
 
                 let calcSum = 0;
                 for (let i = 0; i < priceData.length; i++) {
@@ -59,9 +52,6 @@ export default function Order() {
     if (initOrderFoods.length < 1) {
         return <h2 className='p-4 text-center'>Loading...</h2>;
     }
-
-    //const foodArr = JSON.parse(JSON.stringify(initOrderFoods));
-    //console.log(`foooodarrrrr${JSON.stringify(foodArr)}`)
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
@@ -94,13 +84,9 @@ export default function Order() {
             }
             setSum(calcSum)
             setUpdateOrderFoods(foodArrUpdate)
-            console.log(`iiiwantdaaattaaaa ${JSON.stringify(updateOrderFoods[1])}`);
 
         }
     }
-
-    console.log(`updattteeddd ${JSON.stringify(updateOrderFoods)}`);
-    console.log(`reeeeeeggg fod ${JSON.stringify(initOrderFoods)}`);
 
     const handleUpdateForm = async (event) => {
         event.preventDefault();
@@ -114,7 +100,6 @@ export default function Order() {
         }
 
         const updateData = { orderName: updateOrderName, food: foodArrData };
-        console.log(`arrDaratosendtoDb ${JSON.stringify(updateData)}`)
 
         try {
 
