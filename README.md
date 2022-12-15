@@ -218,27 +218,23 @@ async getAllFood(req, res) {
 ```
 ## User Stories
 I want to see information about the restaurant,
-![Site](./src/utils/pics/AboutPic.png)
+![Site](.client/src/pics/)
 To see the menu of items the restaurant offers,
-
+![Site](.client/src/pics/)
 To view ingredients of food items in the menu,
-
+![Site](.client/src/pics/)
 To view all orders I have created,
-
+![Site](.client/src/pics/)
 To place an order,
-
+![Site](.client/src/pics/)
 Add cookies to my order,
-
+![Site](.client/src/pics/)
 To change my order,
-
+![Site](.client/src/pics/)
 To delete my order,
-
+![Site](.client/src/pics/)
 To send a message if I have a special request
-
-
-## Learning Objectives
-
-
+![Site](.client/src/pics/)
 ## Collaborators
 
 - William Seban, GitHub [https://github.com/wseban]
