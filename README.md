@@ -31,6 +31,7 @@ We wanted to create dynamic and easy to use webpage for small business accessibi
 - [API Routes](#api-routes)
 - [User Stories](#user-stories)
 - [Learning Objectives](#learning-objectives)
+- [Credits](#credits)
 - [Collaborators](#collaborators)
 - [License](#license)
 
@@ -227,6 +228,12 @@ To change my order, Add cookies to my order,
 ![Site](./client/src/pics/alter-order.png)
 To send a message if I have a special request
 ![Site](./client/src/pics/Catering.png)
+
+## Credits
+
+[EmailJS](https://www.emailjs.com/docs/)
+[SweetAlert2](https://sweetalert2.github.io/)
+
 ## Collaborators
 
 - William Seban, [GitHub Profile](https://github.com/wseban)
