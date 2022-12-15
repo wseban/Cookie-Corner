@@ -99,6 +99,10 @@ export default function Dashboard() {
 
   }
 
+  const getDate = (date) => {
+    return date.toDateString();
+  }
+
   return (
     <Container className='mb-30' fluid>
           <h3 className='p-4 text-center'>Your Cookie Corner</h3>
@@ -121,23 +125,31 @@ export default function Dashboard() {
 
       {orders.map((order) => {
         return (
-          <Container className='mb-30 col-8'>
+          <Container className='mb-30 col-7'>
             <Row>
               <Col className='col-12'>
                 <Card className='m-1'>
                   <Card.Body>
-                    <Card.Title>
-                      Order name: {order.orderName}
-                    </Card.Title>
-                    <Card.Text>
-                      Delivery Date: {order.deliveryDate}
-                    </Card.Text>
-                    <Button variant='secondary m-2'  onClick={() => handleEditOrder({order})} active>
-                      <FaEdit color="#eaded2" size={25} />
-                    </Button>
-                    <Button variant='secondary m-2' onClick={() => handleDeleteOrder({order})} active>
-                      <FaTrashAlt color="#eaded2" size={25} />
-                    </Button>
+                    <Container>
+                      <Row>
+                        <Col className='col-9'>
+                          <Card.Title>
+                            Order name: {order.orderName}
+                          </Card.Title>
+                          <Card.Text>
+                            Delivery Date: {order.deliveryDate}
+                          </Card.Text>
+                        </Col>
+                        <Col className='col-3'>
+                          <Button variant='secondary m-2'  onClick={() => handleEditOrder({order})} active>
+                            <FaEdit color="#eaded2" size={25} />
+                          </Button>
+                          <Button variant='secondary m-2' onClick={() => handleDeleteOrder({order})} active>
+                            <FaTrashAlt color="#eaded2" size={25} />
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Container>
                   </Card.Body>
                 </Card>
               </Col>
