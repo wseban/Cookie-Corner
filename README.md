@@ -229,10 +229,10 @@ To send a message if I have a special request
 ![Site](./client/src/pics/Catering.png)
 ## Collaborators
 
-- William Seban, GitHub [https://github.com/wseban]
-- Nichole Guan, Github [https://github.com/ncguan]
-- Priya Bhikshesvaran, [https://github.com/sbhikshe]
-- Mehmet Musabeyoğlu, [https://github.com/MehmetMusabeyoglu]
+- William Seban, [GitHub Profile](https://github.com/wseban)
+- Nichole Guan, [GitHub Profile](https://github.com/ncguan)
+- Priya Bhikshesvaran, [GitHub Profile](https://github.com/sbhikshe)
+- Mehmet Musabeyoğlu, [GitHub Profile](https://github.com/MehmetMusabeyoglu)
 
 ## License
 
