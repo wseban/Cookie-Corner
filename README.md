@@ -1,4 +1,4 @@
-# Cookie-Corner
+# Cookie Corner
 
 ## Description
 
@@ -30,7 +30,6 @@ We wanted to create dynamic and easy to use webpage for small business accessibi
 - [Models and Relationships](#models-and-relationships)
 - [API Routes](#api-routes)
 - [User Stories](#user-stories)
-- [Learning Objectives](#learning-objectives)
 - [Credits](#credits)
 - [Collaborators](#collaborators)
 - [License](#license)
@@ -232,14 +231,15 @@ To send a message if I have a special request
 ## Credits
 
 [EmailJS](https://www.emailjs.com/docs/)
+
 [SweetAlert2](https://sweetalert2.github.io/)
 
 ## Collaborators
 
-- William Seban, [GitHub Profile](https://github.com/wseban)
-- Nichole Guan, [GitHub Profile](https://github.com/ncguan)
-- Priya Bhikshesvaran, [GitHub Profile](https://github.com/sbhikshe)
-- Mehmet Musabeyoğlu, [GitHub Profile](https://github.com/MehmetMusabeyoglu)
+- William Seban [GitHub Profile](https://github.com/wseban)
+- Nichole Guan [GitHub Profile](https://github.com/ncguan)
+- Priya Bhikshesvaran [GitHub Profile](https://github.com/sbhikshe)
+- Mehmet Musabeyoğlu [GitHub Profile](https://github.com/MehmetMusabeyoglu)
 
 ## License
 
