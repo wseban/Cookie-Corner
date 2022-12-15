@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col, Card, Button, ButtonGroup, Form, FormGroup } from "react-bootstrap";
 import { getAllFoods, createOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
@@ -54,6 +56,7 @@ export default function OrderForm() {
 
     const [orderFormData, setOrderFormData] = useState({});
     const [orderNameData, setOrderNameData] = useState();
+    const [orderDateData, setOrderDateData] = useState(new Date());
 
     function handleOnChange(event) {
         const { name, value } = event.target;
@@ -74,6 +77,7 @@ export default function OrderForm() {
 
         const orderData = {
             orderName: orderNameData,
+            deliveryDate: orderDateData,
             food: orderFormData
         };
 
@@ -174,6 +178,10 @@ export default function OrderForm() {
                             <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
                             </Form.Control>
                         </Form.Group>
+                        <h5 className="pt-1">Delivery date</h5>
+                        <div className="col-6 pt-1">
+                            <DatePicker name="orderDate" selected={orderDateData} onChange={(date) => setOrderDateData(date)} />
+                         </div>
                         {cookieData.map((item) => {
                             return (
                                 <Form.Group className="col-6 pt-1">
