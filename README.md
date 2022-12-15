@@ -8,7 +8,7 @@ Cookie Monster’s Cookie Corner is a dynamic and reactive webpage so that anyon
 
 Here is the link to the [deployed application](https://cmcookiecorner.herokuapp.com/)
 
-![demo]()
+![demo](./client/src/pics/Cookie%20Monster.gif)
 
 ## Why?
 
@@ -218,23 +218,15 @@ async getAllFood(req, res) {
 ```
 ## User Stories
 I want to see information about the restaurant,
-![Site](.client/src/pics/)
+![Site](./client/src/pics/Readme-Home.png)
 To see the menu of items the restaurant offers,
-![Site](.client/src/pics/)
-To view ingredients of food items in the menu,
-![Site](.client/src/pics/)
-To view all orders I have created,
-![Site](.client/src/pics/)
-To place an order,
-![Site](.client/src/pics/)
-Add cookies to my order,
-![Site](.client/src/pics/)
-To change my order,
-![Site](.client/src/pics/)
-To delete my order,
-![Site](.client/src/pics/)
+![Site](./client/src/pics/Readme-Menu.png)
+To view all orders I have created, To place an order, To delete my order,
+![Site](./client/src/pics/view-orders.png)
+To change my order, Add cookies to my order,
+![Site](./client/src/pics/alter-order.png)
 To send a message if I have a special request
-![Site](.client/src/pics/)
+![Site](./client/src/pics/Catering.png)
 ## Collaborators
 
 - William Seban, GitHub [https://github.com/wseban]
