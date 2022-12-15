@@ -93,6 +93,9 @@ export default function Dashboard() {
 
     const userData = await response.json();
     console.log('userData' + userData);
+    
+    /* refresh the dashboard */
+    setUserData({});
 
   }
 
