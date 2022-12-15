@@ -17,8 +17,6 @@ module.exports = {
   /* middleware to verify the token on client requests to access protected resources */
   authMiddleware: function(req, res, next) {
 
-    console.log(req.headers.authorization);
-
     /* token can be in the request body, or query params, or in Authorization in the header */
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -26,12 +24,7 @@ module.exports = {
     /* Authorization: Bearer AbCdEf123456 */
     /* need to get the token from this array */
     if(req.headers.authorization) {
-      console.log(req.headers.authorization);
       token = token.split(' ').pop().trim();
-      //const authArr = token.split(' ');
-      //console.log("authArr:" + authArr);
-      //token = authArr[1];
-      //console.log("token: " + token);
     }
 
     /* if we don't have anything in the token, return right away */
@@ -49,16 +42,12 @@ module.exports = {
     /* to get the user data */
     try {
       const { data } = jwt.verify( token, secret, {maxAge: expiration});
+      /* valid token, go on and do the operation */
       req.user = data;
-      console.log('Validated token');
-      console.log('data: ' + JSON.stringify(data));
-      console.log('user id:' + req.user._id);
-      console.log('email: ', req.user.email);
     } catch {
-      console.log('Invalid token');
-      res.status(401).json({message: 'Authentication failed, invalid token'});
+      /* invalid token, return response right away and return */
+      return res.status(401).json({message: 'Authentication failed, invalid token'});
     }
-
 
     next();
   }
