@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getOneOrder, updateOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { Button, Container, Row, Col, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 export default function Order() {
     const [initOrderName, setInitOrderName] = useState();
     const [initOrderFoods, setinitOrderFoods] = useState([]);
+    const [initOrderDate, setinitOrderDate] = useState();
     let { orderId } = useParams();
     const [calcSum, setSum] = useState(0);
     const token = AuthService.getToken();
@@ -14,7 +17,7 @@ export default function Order() {
     const [updateOrderName, setUpdateOrderName] = useState();
     const [updateOrderFoods, setUpdateOrderFoods] = useState([]);
 
-    
+
     useEffect(() => {
 
         const getOrderInfo = async () => {
@@ -30,6 +33,7 @@ export default function Order() {
                 if (orderDataRes) {
                     setInitOrderName(orderDataRes.orderData.orderName);
                     setinitOrderFoods(orderDataRes.orderData.food);
+                    setinitOrderDate(new Date(orderDataRes.orderData.deliveryDate));
                     const foodArr = JSON.parse(JSON.stringify(orderDataRes.orderData.food));
                     setUpdateOrderFoods(foodArr);
                 }
@@ -99,7 +103,7 @@ export default function Order() {
             foodArrData = updateOrderFoods
         }
 
-        const updateData = { orderName: updateOrderName, food: foodArrData };
+        const updateData = { orderName: updateOrderName, food: foodArrData, deliveryDate: initOrderDate };
 
         try {
 
@@ -123,7 +127,7 @@ export default function Order() {
             <Form
                 onSubmit={handleUpdateForm}
             >
-                <Row className='d-flex justify-content-center text-center' style={{ fontSize: "300%", borderBottom: "solid 5px #ff69b4" }}>
+                <Row className='d-flex justify-content-center text-center' style={{ fontSize: "300%" }}>
 
                     <FormLabel className="col-sm-4 col-form-label">Order Name</FormLabel>
 
@@ -135,6 +139,16 @@ export default function Order() {
                                 onChange={handleOnChange}
                             >
                             </FormControl>
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row className='d-flex justify-content-center text-center' style={{ fontSize: "220%", borderBottom: "solid 5px #ff69b4" }}>
+
+                    <FormLabel className="col-sm-4 col-form-label">Delivery Date</FormLabel>
+
+                    <Col className='m-auto' xs={8}>
+                        <FormGroup id='name'>
+                            <DatePicker name="orderDate" selected={initOrderDate} onChange={(date) => setinitOrderDate(date)} />
                         </FormGroup>
                     </Col>
                 </Row>
@@ -185,7 +199,7 @@ export default function Order() {
                     ))
                 }
 
-                <Row style={{ fontSize: "175%", borderBottom: "solid 5px #ff69b4" }} className="mb-3">
+                <Row style={{ fontSize: "175%", borderTop: "solid 5px #ff69b4" }} className="mb-3">
                     <Col xs={6}></Col>
                     <Col xs={3} className="text-center">
                         Total Price
