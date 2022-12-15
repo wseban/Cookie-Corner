@@ -99,10 +99,6 @@ export default function Dashboard() {
 
   }
 
-  const getDate = (date) => {
-    return date.toDateString();
-  }
-
   return (
     <Container className='mb-30' fluid>
           <h3 className='p-4 text-center'>Your Cookie Corner</h3>
