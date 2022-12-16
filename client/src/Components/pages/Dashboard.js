@@ -8,10 +8,10 @@ import { FaEdit } from 'react-icons/fa';
 export default function Dashboard() {
   const [userName, setUserName] = useState('');
   const [orders, setOrders] = useState([]);
+  const [formattedDates, setFormattedDates] = useState([]);
 
   const [userData, setUserData] = useState({});
   const userDataLength = Object.keys(userData).length;
-
   
   useEffect(() => {
     const getMyOrders = async () => {
@@ -44,6 +44,13 @@ export default function Dashboard() {
         setUserData(userData);
         setUserName(userData.fullName);
         setOrders(userData.orders);
+
+        /* Format the order dates and save them to display */
+        let dates = [];
+        for (const order of userData.orders) {
+          dates.push(new Date(order.deliveryDate).toDateString());
+        }
+        setFormattedDates(dates);
       }
     }
 
@@ -119,7 +126,7 @@ export default function Dashboard() {
           {orders.length? `Your orders`: `You have no orders at present`}
           </h4>
 
-      {orders.map((order) => {
+      {orders.map((order, i) => {
         return (
           <Container className='mb-30 col-7'>
             <Row>
@@ -133,7 +140,7 @@ export default function Dashboard() {
                             Order name: {order.orderName}
                           </Card.Title>
                           <Card.Text>
-                            Delivery Date: {order.deliveryDate}
+                            Delivery Date: {formattedDates[i]}
                           </Card.Text>
                         </Col>
                         <Col className='col-3'>
