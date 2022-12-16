@@ -143,15 +143,17 @@ const orderSchema = new Schema(
 ## API Routes
 
 #### User
-/api/users                  /api/users/me                                   /api/users/login    /api/users/logout
-Create a user on signup     Get the currently logged in user with orders    Log the user in     Log the user out
+POST /api/users           Create a user on signup \
+GET /api/users/me         Get the currently logged in user with orders\
+POST /api/users/login     Log the user in\
+POST /api/users/logout    Log the user out\
+            
 ```Javascript
 getMe: async (req, res) => {
       console.log("in getMe");
       try {
         console.log("user._id:" + req.user._id);
         const user = await User.findOne({_id: req.user._id}).populate('orders');
-        console.log("found user:" + user);
         user? res.json(user):
           res.status(500).json({message: 'Error finding user'});
         return;
@@ -162,13 +164,13 @@ getMe: async (req, res) => {
 ```
 
 #### Order
-/api/order                  /api/order/:orderId
-GET                         GET
-Get all orders              Get a single order by id
-POST                        PUT
-Create an order             Update order details 
-                            DELETE
-                            Delete an order
+
+GET   /api/order            Get all orders\
+GET   /api/order/:orderId   Get a single order by id\
+POST  /api/order            Create an order\
+PUT   /api/order/:orderId   Update order details\
+DELETE /api/order/:orderId  Delete an order
+                            
 ```Javascript
 async createOrder(req, res){
         try {
@@ -192,8 +194,9 @@ async createOrder(req, res){
 ```
 
 #### Food
-/api/food                   /api/food/:foodId           
-Get all the food items      Get one food item by id
+GET /api/food               Get all the food items
+GET /api/food/:foodId       Get one food item by id          
+
 ```Javascript
 async getAllFood(req, res) {
         const allFood = await Food.find();
