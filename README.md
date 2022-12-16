@@ -149,9 +149,7 @@ Create a user on signup     Get the currently logged in user with orders    Log 
 getMe: async (req, res) => {
       console.log("in getMe");
       try {
-        console.log("user._id:" + req.user._id);
         const user = await User.findOne({_id: req.user._id}).populate('orders');
-        console.log("found user:" + user);
         user? res.json(user):
           res.status(500).json({message: 'Error finding user'});
         return;
