@@ -15,6 +15,7 @@ export default function LoggedOutMenu() {
             <Row className="justify-content-center pb-2">
                 <Col className="col-8 p-2 mt-4">
                     <p className="text-center" style={{ fontSize: "150%", color: "#504A6D" }}> Click icon to download our menu
+                        {/* For downloading the menu when click to cookie icon */}
                         <a
                             className="btn justify-content-md-center mx-1"
                             href={Menu}

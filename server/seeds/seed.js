@@ -1,7 +1,7 @@
 const connection = require("../config/connection");
 const {Food} = require("../models");
 
-
+// Our seed data for cookies
 const seedFood = [
     {
         name: "Brown Chocolate Chip Cookie",
@@ -40,6 +40,7 @@ const seedFood = [
     }
 ];
 
+// Seeding part of the code
 connection.once("open", async () => {
     await Food.deleteMany({});
     await Food.insertMany(seedFood);

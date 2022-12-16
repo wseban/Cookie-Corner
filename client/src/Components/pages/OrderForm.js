@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Row, Col, Card, Button, ButtonGroup, Form, FormGroup } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import { getAllFoods, createOrder } from '../../utils/api';
 import AuthService from '../../utils/auth';
 import BrownChocolateChipCookie from "../assets/BrownChocolateChipCookie.png";
@@ -23,11 +23,11 @@ export default function OrderForm() {
     ];
 
     useEffect(() => {
+
+        // For getting cookies from our database
         const getAllCookies = async () => {
             const response = await getAllFoods();
-            console.log(response);
             if (!response.ok) {
-                console.log(response.ok);
                 return;
             }
 
@@ -39,7 +39,6 @@ export default function OrderForm() {
                 for (let i = 0; i < cookieData.length; i++) {
                     cookieData[i].picture = getImportName(cookieData[i].picture);
                 }
-                console.log(cookieData);
 
             }
         }
@@ -47,10 +46,10 @@ export default function OrderForm() {
         getAllCookies();
     }, []);
 
+    // For importing cookie pictures
     function getImportName(picturePath) {
         const arr = picturePath.split('/');
         const importName = arr[2].split('.');
-        console.log(importName);
         return importName[0];
     }
 
@@ -58,6 +57,7 @@ export default function OrderForm() {
     const [orderNameData, setOrderNameData] = useState();
     const [orderDateData, setOrderDateData] = useState(new Date());
 
+    // For handling changes in form group
     function handleOnChange(event) {
         const { name, value } = event.target;
 
@@ -66,14 +66,11 @@ export default function OrderForm() {
         } else {
             setOrderFormData({ ...orderFormData, [name]: value });
         }
-        console.log("!!!!!!!dglskjglksjgsdkl");
     }
 
+    // For submitting order
     function onSubmitOrder(event) {
         event.preventDefault();
-
-        console.log("orderName= " + orderNameData);
-        console.log("orderFormData" + JSON.stringify(orderFormData));
 
         const orderData = {
             orderName: orderNameData,
@@ -81,63 +78,52 @@ export default function OrderForm() {
             food: orderFormData
         };
 
-        console.log("ORDERDATA=" + JSON.stringify(orderData));
 
         sendNewOrder(orderData);
+        //For sending to dahsboard after submit the order
         document.location.href = '/dashboard';
 
     }
 
+    // For sending new order
     const sendNewOrder = async (orderData) => {
         if (!AuthService.isLoggedIn) {
-            console.log('How did we get there with no one logged in?');
             return;
         }
 
-        console.log('isLoggedIn');
         const token = AuthService.getToken();
         if (!token) {
             return;
         }
 
-        console.log('got token');
 
         /* token exists, check if expired */
         if (AuthService.checkTokenExpired(token)) {
             return;
         }
 
-        console.log('token has not expired');
 
-        //for(let i=0; i<cookieData._id)
-        console.log("COOOKKKKIIIESSSS= " + JSON.stringify(cookieData));
 
         const foodArr = []
         for (let i = 0; i < cookieData.length; i++) {
             if (cookieData[i]._id in orderData.food) {
-                console.log(`id matches in db${cookieData[i]._id}`)
                 const itemId = cookieData[i]._id;
                 const item = { "foodId": cookieData[i]._id, "quantity": orderData.food[itemId] }
-                console.log(`iittteeeemmmm food: ${JSON.stringify(item)}`)
                 foodArr.push(item)
             }
         }
 
         orderData.food = foodArr;
-        //console.log("New order data= " + JSON.stringify(orderDataa));
 
 
         /* use the api - to creating a new order */
         const response = await createOrder(token, orderData);
         if (!response.ok) {
-            console.log(response.ok);
             return;
         }
 
-        console.log('getMyInfo returned');
 
         const newOrderData = await response.json();
-        console.log("New order= " + JSON.stringify(newOrderData));
 
     }
 
@@ -171,32 +157,32 @@ export default function OrderForm() {
                     })}
                 </Col>
                 <Col className="col-6">
-                <Container className="col-8" >
-                    <Form className="p-3 m-3" onSubmit={onSubmitOrder}>
-                        <Form.Group className="col-6">
-                            <Form.Label style={{ fontSize: "125%"}}> <b>Order Name</b></Form.Label>
-                            <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
-                            </Form.Control>
-                        </Form.Group>
-                        <h5 className="pt-1">Delivery date</h5>
-                        <div className="col-6 pt-1">
-                            <DatePicker name="orderDate" selected={orderDateData} onChange={(date) => setOrderDateData(date)} />
-                         </div>
-                        {cookieData.map((item) => {
-                            return (
-                                <Form.Group className="col-6 pt-1">
-                                    <Form.Label style={{ fontSize: "125%"}} > {item.name} </Form.Label>
-                                    <Form.Control style={{ fontSize: "125%"}} onChange={handleOnChange} name={item._id} type="number" min="0" placeholder="0" active>
-                                    </Form.Control>
-                                </Form.Group>
-                            )
-                        })}
-                        <Button style={{ fontSize: "125%"}} variant="secondary" className="mt-3 col-6" type="submit" active>
-                            Submit your order
-                            <FaShoppingCart className="m-2" color="#eaded2" size={30} />
-                        </Button>
-                    </Form>
-                </Container >
+                    <Container className="col-8" >
+                        <Form className="p-3 m-3" onSubmit={onSubmitOrder}>
+                            <Form.Group className="col-6">
+                                <Form.Label style={{ fontSize: "125%" }}> <b>Order Name</b></Form.Label>
+                                <Form.Control onChange={handleOnChange} name="orderName" value={orderNameData} type="string" placeholder="Enter a name for your order" active>
+                                </Form.Control>
+                            </Form.Group>
+                            <h5 className="pt-1">Delivery date</h5>
+                            <div className="col-6 pt-1">
+                                <DatePicker name="orderDate" selected={orderDateData} onChange={(date) => setOrderDateData(date)} />
+                            </div>
+                            {cookieData.map((item) => {
+                                return (
+                                    <Form.Group className="col-6 pt-1">
+                                        <Form.Label style={{ fontSize: "125%" }} > {item.name} </Form.Label>
+                                        <Form.Control style={{ fontSize: "125%" }} onChange={handleOnChange} name={item._id} type="number" min="0" placeholder="0" active>
+                                        </Form.Control>
+                                    </Form.Group>
+                                )
+                            })}
+                            <Button style={{ fontSize: "125%" }} variant="secondary" className="mt-3 col-6" type="submit" active>
+                                Submit your order
+                                <FaShoppingCart className="m-2" color="#eaded2" size={30} />
+                            </Button>
+                        </Form>
+                    </Container >
                 </Col>
             </Row>
         </Container >
